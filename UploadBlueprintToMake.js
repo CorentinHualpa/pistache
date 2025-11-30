@@ -127,14 +127,30 @@ export const UploadBlueprintToMake = {
     const accept       = p.accept       || '.json,.txt';
     const maxFileSizeMB = p.maxFileSizeMB || 10;
     
-    // Webhook config
+    // Webhook config (OBLIGATOIRE)
     const webhook          = p.webhook || {};
-    const webhookUrl       = webhook.url || 'https://hook.eu2.make.com/dehj5bls1ippwl4kma12utsati3jva2i';
+    const webhookUrl       = webhook.url;
     const webhookMethod    = (webhook.method || 'POST').toUpperCase();
     const webhookHeaders   = webhook.headers || {};
     const webhookTimeoutMs = Number.isFinite(webhook.timeoutMs) ? webhook.timeoutMs : 120000;
     const webhookRetries   = Number.isFinite(webhook.retries) ? webhook.retries : 1;
     const extra            = webhook.extra || {};
+    
+    console.log('[UploadBlueprintToMake] ⚙️ Config webhook:', {
+      url: webhookUrl ? webhookUrl.substring(0, 50) + '...' : 'NON DÉFINI',
+      timeoutMs: webhookTimeoutMs,
+      retries: webhookRetries
+    });
+    
+    // ============ VALIDATION WEBHOOK ============
+    if (!webhookUrl) {
+      const div = document.createElement('div');
+      div.innerHTML = `<div style="padding:16px;border-radius:12px;background:linear-gradient(135deg,#fee2e2,#fecaca);border:1px solid #fca5a5;color:#991b1b;font-weight:500">
+        ⚠️ Erreur de configuration : <b>webhook.url</b> manquant dans le payload.
+      </div>`;
+      element.appendChild(div);
+      return;
+    }
     
     // Paths Voiceflow
     const pathSuccess = p.pathSuccess || 'Default';
@@ -163,10 +179,7 @@ export const UploadBlueprintToMake = {
     ];
     const phases = Array.isArray(loaderCfg.phases) ? loaderCfg.phases : defaultPhases;
     
-    console.log('[UploadBlueprintToMake] ⚙️ Config:', {
-      webhookUrl: webhookUrl?.substring(0, 50) + '...',
-      timeoutMs: webhookTimeoutMs
-    });
+
     
     // ============ STYLES ============
     const styles = `
@@ -181,7 +194,7 @@ export const UploadBlueprintToMake = {
         50% { box-shadow: 0 0 20px 4px ${accentColor}60; }
       }
       @keyframes slideUp {
-        from { transform: translateY(20px); opacity: 0; }
+        from { transform: translateY(10px); opacity: 0; }
         to { transform: translateY(0); opacity: 1; }
       }
       @keyframes fadeIn {
@@ -205,95 +218,95 @@ export const UploadBlueprintToMake = {
       .blueprint-upload-wrap {
         width: 100%;
         max-width: 100%;
-        animation: slideUp 0.4s ease-out;
-        font-family: 'Segoe UI', system-ui, sans-serif;
+        animation: slideUp 0.3s ease-out;
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        box-sizing: border-box;
+      }
+      
+      .blueprint-upload-wrap * {
+        box-sizing: border-box;
       }
       
       .blueprint-upload-card {
         background: linear-gradient(145deg, #FFFFFF, #F8FAFC);
-        border-radius: 20px;
-        padding: 24px;
-        box-shadow: 
-          0 10px 40px rgba(0,0,0,0.08),
-          0 0 0 3px ${accentColor}40;
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        border: 2px solid ${accentColor}30;
         position: relative;
         overflow: hidden;
       }
       
       .blueprint-upload-header {
         text-align: center;
-        margin-bottom: 24px;
+        margin-bottom: 16px;
       }
       
       .blueprint-upload-title {
-        font-size: 22px;
-        font-weight: 800;
-        background: linear-gradient(135deg, ${primaryColor}, ${secondaryColor});
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin: 0 0 8px 0;
+        font-size: 18px;
+        font-weight: 700;
+        color: ${primaryColor};
+        margin: 0 0 4px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
       }
       
       .blueprint-upload-subtitle {
-        font-size: 13px;
+        font-size: 12px;
         color: #64748b;
         font-weight: 500;
+        margin: 0;
       }
       
       /* Zone d'upload */
       .blueprint-upload-zone {
-        border: 3px dashed transparent;
-        background: linear-gradient(#fff, #fff) padding-box,
-                    linear-gradient(135deg, ${primaryColor}40, ${secondaryColor}40) border-box;
-        border-radius: 16px;
-        padding: 32px 24px;
+        border: 2px dashed ${primaryColor}40;
+        background: linear-gradient(135deg, ${primaryColor}05, ${secondaryColor}08);
+        border-radius: 12px;
+        padding: 24px 16px;
         text-align: center;
         cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        margin-bottom: 20px;
+        transition: all 0.2s ease;
+        margin-bottom: 16px;
       }
       
       .blueprint-upload-zone:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 12px 24px ${primaryColor}30;
-        background: linear-gradient(#fff, #fff) padding-box,
-                    linear-gradient(135deg, ${primaryColor}, ${secondaryColor}) border-box;
+        border-color: ${accentColor};
+        background: linear-gradient(135deg, ${accentColor}08, ${accentColor}12);
       }
       
       .blueprint-upload-zone.dragging {
-        background: linear-gradient(#fff, #fff) padding-box,
-                    linear-gradient(135deg, ${accentColor}, ${highlightColor}) border-box;
-        transform: scale(1.02);
+        border-color: ${accentColor};
+        background: linear-gradient(135deg, ${accentColor}15, ${highlightColor}15);
+        transform: scale(1.01);
       }
       
       .blueprint-upload-zone.has-file {
-        background: linear-gradient(135deg, ${highlightColor}20, ${highlightColor}30) padding-box,
-                    linear-gradient(135deg, ${highlightColor}, ${accentColor}) border-box;
+        display: none;
       }
       
       .blueprint-upload-icon {
-        font-size: 48px;
-        margin-bottom: 12px;
-        display: inline-block;
-        filter: drop-shadow(0 4px 8px ${primaryColor}40);
+        font-size: 40px;
+        margin-bottom: 8px;
+        display: block;
       }
       
       .blueprint-upload-zone:hover .blueprint-upload-icon {
-        animation: uploadPulse 1.5s infinite;
+        animation: uploadPulse 1s infinite;
       }
       
       .blueprint-upload-desc {
-        font-size: 15px;
+        font-size: 14px;
         color: #475569;
         font-weight: 600;
+        margin-bottom: 4px;
       }
       
       .blueprint-upload-formats {
-        font-size: 12px;
+        font-size: 11px;
         color: #94a3b8;
-        margin-top: 8px;
       }
       
       /* Fichier sélectionné */
@@ -301,12 +314,12 @@ export const UploadBlueprintToMake = {
         display: none;
         align-items: center;
         justify-content: space-between;
-        padding: 14px 16px;
-        background: linear-gradient(135deg, ${highlightColor}15, ${highlightColor}25);
-        border-radius: 12px;
-        border-left: 4px solid ${highlightColor};
-        margin-bottom: 20px;
-        animation: fadeIn 0.3s ease-out;
+        padding: 12px 14px;
+        background: linear-gradient(135deg, ${highlightColor}12, ${highlightColor}20);
+        border-radius: 10px;
+        border: 1px solid ${highlightColor}50;
+        margin-bottom: 16px;
+        animation: fadeIn 0.2s ease-out;
       }
       
       .blueprint-file-selected.active {
@@ -316,81 +329,92 @@ export const UploadBlueprintToMake = {
       .blueprint-file-info {
         display: flex;
         flex-direction: column;
-        gap: 4px;
+        gap: 2px;
+        overflow: hidden;
       }
       
       .blueprint-file-name {
-        font-weight: 700;
+        font-weight: 600;
         color: #1e293b;
-        font-size: 14px;
+        font-size: 13px;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 6px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      
+      .blueprint-file-name span:last-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       
       .blueprint-file-size {
-        font-size: 12px;
+        font-size: 11px;
         color: #64748b;
       }
       
       .blueprint-file-remove {
-        width: 32px;
-        height: 32px;
-        border-radius: 8px;
+        flex-shrink: 0;
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
         border: none;
-        background: linear-gradient(135deg, #fee2e2, #fecaca);
-        color: #991b1b;
+        background: #fee2e2;
+        color: #dc2626;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 18px;
+        font-size: 16px;
         font-weight: bold;
         transition: all 0.2s;
+        margin-left: 10px;
       }
       
       .blueprint-file-remove:hover {
-        background: linear-gradient(135deg, #fecaca, #fca5a5);
-        transform: scale(1.1);
+        background: #fecaca;
+        transform: scale(1.05);
       }
       
       /* Champs de formulaire */
       .blueprint-form-group {
-        margin-bottom: 16px;
+        margin-bottom: 14px;
       }
       
       .blueprint-form-label {
         display: block;
-        font-size: 13px;
-        font-weight: 700;
+        font-size: 12px;
+        font-weight: 600;
         color: ${primaryColor};
-        margin-bottom: 8px;
+        margin-bottom: 6px;
       }
       
       .blueprint-form-label .required {
         color: ${accentColor};
-        margin-left: 4px;
+        margin-left: 2px;
       }
       
       .blueprint-form-input {
         width: 100%;
-        padding: 12px 16px;
-        border: 2px solid #e2e8f0;
-        border-radius: 12px;
-        font-size: 14px;
+        padding: 10px 12px;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 13px;
         font-family: inherit;
         transition: all 0.2s;
-        box-sizing: border-box;
+        background: #fff;
       }
       
       .blueprint-form-input:focus {
         outline: none;
         border-color: ${accentColor};
-        box-shadow: 0 0 0 3px ${accentColor}20;
+        box-shadow: 0 0 0 3px ${accentColor}15;
       }
       
       .blueprint-form-input::placeholder {
-        color: #94a3b8;
+        color: #a0aec0;
       }
       
       .blueprint-form-input.error {
@@ -399,20 +423,21 @@ export const UploadBlueprintToMake = {
       }
       
       .blueprint-form-textarea {
-        min-height: 80px;
+        min-height: 70px;
         resize: vertical;
+        line-height: 1.4;
       }
       
       .blueprint-form-hint {
-        font-size: 11px;
+        font-size: 10px;
         color: #94a3b8;
-        margin-top: 6px;
+        margin-top: 4px;
       }
       
       .blueprint-form-error {
-        font-size: 12px;
+        font-size: 11px;
         color: #ef4444;
-        margin-top: 6px;
+        margin-top: 4px;
         display: none;
       }
       
@@ -423,44 +448,45 @@ export const UploadBlueprintToMake = {
       /* Boutons d'action */
       .blueprint-actions {
         display: flex;
-        gap: 12px;
-        margin-top: 24px;
+        gap: 10px;
+        margin-top: 18px;
       }
       
       .blueprint-btn {
         flex: 1;
-        padding: 14px 24px;
-        border-radius: 12px;
+        padding: 12px 16px;
+        border-radius: 10px;
         border: none;
-        font-weight: 700;
-        font-size: 14px;
+        font-weight: 600;
+        font-size: 13px;
         cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all 0.2s ease;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
+        gap: 6px;
       }
       
       .blueprint-btn-back {
-        background: linear-gradient(145deg, #f1f5f9, #e2e8f0);
+        background: #f1f5f9;
         color: #475569;
+        flex: 0.8;
       }
       
       .blueprint-btn-back:hover {
-        background: linear-gradient(145deg, #e2e8f0, #cbd5e1);
-        transform: translateY(-2px);
+        background: #e2e8f0;
       }
       
       .blueprint-btn-send {
         background: linear-gradient(135deg, ${accentColor}, #FF69B4);
         color: white;
-        box-shadow: 0 4px 12px ${accentColor}40;
+        box-shadow: 0 2px 8px ${accentColor}40;
+        flex: 1.2;
       }
       
       .blueprint-btn-send:hover:not(:disabled) {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px ${accentColor}50;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px ${accentColor}50;
       }
       
       .blueprint-btn-send:disabled {
@@ -471,10 +497,10 @@ export const UploadBlueprintToMake = {
       
       /* Status */
       .blueprint-status {
-        margin-top: 16px;
-        padding: 12px;
-        border-radius: 10px;
-        font-size: 13px;
+        margin-top: 12px;
+        padding: 10px;
+        border-radius: 8px;
+        font-size: 12px;
         font-weight: 600;
         text-align: center;
         display: none;
@@ -482,15 +508,15 @@ export const UploadBlueprintToMake = {
       
       .blueprint-status.error {
         display: block;
-        background: linear-gradient(135deg, #fee2e2, #fecaca);
-        color: #991b1b;
+        background: #fee2e2;
+        color: #dc2626;
         border: 1px solid #fca5a5;
       }
       
       .blueprint-status.success {
         display: block;
-        background: linear-gradient(135deg, #d1fae5, #a7f3d0);
-        color: #065f46;
+        background: #d1fae5;
+        color: #059669;
         border: 1px solid #6ee7b7;
       }
       
@@ -498,18 +524,17 @@ export const UploadBlueprintToMake = {
       .blueprint-loader {
         display: none;
         background: linear-gradient(145deg, ${primaryColor}, ${secondaryColor});
-        border-radius: 24px;
-        padding: 32px 24px;
-        box-shadow: 
-          0 20px 60px rgba(0,0,0,0.3),
-          0 0 0 3px ${accentColor};
+        border-radius: 16px;
+        padding: 24px 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        border: 2px solid ${accentColor};
         position: relative;
         overflow: hidden;
       }
       
       .blueprint-loader.active {
         display: block;
-        animation: slideUp 0.4s ease-out;
+        animation: slideUp 0.3s ease-out;
       }
       
       .blueprint-loader::before {
@@ -519,12 +544,7 @@ export const UploadBlueprintToMake = {
         left: -100%;
         width: 200%;
         height: 100%;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          rgba(255,255,255,0.05),
-          transparent
-        );
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
         animation: shimmer 3s infinite;
       }
       
@@ -532,46 +552,48 @@ export const UploadBlueprintToMake = {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 24px;
+        gap: 16px;
         position: relative;
         z-index: 2;
       }
       
       .blueprint-loader-gif {
-        width: 120px;
-        height: 120px;
+        width: 100px;
+        height: 100px;
         border-radius: 50%;
         object-fit: cover;
         animation: pistacheDance 1.5s ease-in-out infinite;
-        filter: drop-shadow(0 8px 24px rgba(0,0,0,0.4));
+        filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
       }
       
       .blueprint-loader-title {
         color: #FFFFFF;
-        font-weight: 800;
-        font-size: 18px;
+        font-weight: 700;
+        font-size: 15px;
         text-align: center;
-        text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+        margin: 0;
       }
       
       .blueprint-loader-message {
         color: ${highlightColor};
-        font-size: 14px;
-        font-weight: 600;
+        font-size: 12px;
+        font-weight: 500;
         text-align: center;
         font-style: italic;
+        margin: 0;
       }
       
       .blueprint-progress-container {
         width: 100%;
-        max-width: 280px;
+        max-width: 240px;
       }
       
       .blueprint-progress-bar-bg {
         width: 100%;
-        height: 10px;
+        height: 8px;
         background: rgba(255,255,255,0.15);
-        border-radius: 20px;
+        border-radius: 10px;
         overflow: hidden;
       }
       
@@ -579,9 +601,9 @@ export const UploadBlueprintToMake = {
         height: 100%;
         background: linear-gradient(90deg, ${accentColor}, ${highlightColor}, ${accentColor});
         background-size: 200% 100%;
-        border-radius: 20px;
-        transition: width 0.5s ease-out;
-        animation: shimmer 2s infinite, progressPulse 2s infinite;
+        border-radius: 10px;
+        transition: width 0.4s ease-out;
+        animation: shimmer 2s infinite;
         width: 0%;
       }
       
@@ -589,75 +611,73 @@ export const UploadBlueprintToMake = {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-top: 12px;
+        margin-top: 8px;
       }
       
       .blueprint-progress-step {
-        color: #FFFFFF;
-        font-size: 12px;
-        font-weight: 600;
-        text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+        color: rgba(255,255,255,0.9);
+        font-size: 11px;
+        font-weight: 500;
       }
       
       .blueprint-progress-percent {
         color: ${highlightColor};
-        font-size: 14px;
-        font-weight: 800;
+        font-size: 13px;
+        font-weight: 700;
       }
       
       /* ====== SUCCESS CARD ====== */
       .blueprint-success-card {
         display: none;
         background: linear-gradient(145deg, #FFFFFF, #F8FAFC);
-        border-radius: 24px;
-        padding: 32px 24px;
-        box-shadow: 
-          0 20px 60px rgba(0,0,0,0.15),
-          0 0 0 3px ${highlightColor};
+        border-radius: 16px;
+        padding: 24px 20px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        border: 2px solid ${highlightColor};
         text-align: center;
       }
       
       .blueprint-success-card.active {
         display: block;
-        animation: slideUp 0.5s ease-out;
+        animation: slideUp 0.3s ease-out;
       }
       
       .blueprint-success-icon {
-        font-size: 56px;
-        margin-bottom: 16px;
+        font-size: 44px;
+        margin-bottom: 12px;
+        display: block;
       }
       
       .blueprint-success-title {
-        font-size: 22px;
-        font-weight: 800;
-        background: linear-gradient(135deg, ${primaryColor}, ${secondaryColor});
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 12px;
+        font-size: 17px;
+        font-weight: 700;
+        color: ${primaryColor};
+        margin: 0 0 8px 0;
       }
       
       .blueprint-success-message {
         color: #64748b;
-        font-size: 14px;
-        margin-bottom: 24px;
-        line-height: 1.6;
+        font-size: 12px;
+        margin: 0 0 16px 0;
+        line-height: 1.4;
       }
       
       .blueprint-success-details {
-        background: linear-gradient(135deg, ${highlightColor}15, ${highlightColor}25);
-        border-radius: 12px;
-        padding: 16px;
-        margin-bottom: 24px;
+        background: ${highlightColor}10;
+        border-radius: 10px;
+        padding: 14px;
+        margin-bottom: 18px;
         text-align: left;
+        border: 1px solid ${highlightColor}30;
       }
       
       .blueprint-success-detail-item {
         display: flex;
         align-items: flex-start;
-        gap: 10px;
+        gap: 8px;
         margin-bottom: 8px;
-        font-size: 13px;
+        font-size: 12px;
+        line-height: 1.4;
       }
       
       .blueprint-success-detail-item:last-child {
@@ -665,9 +685,10 @@ export const UploadBlueprintToMake = {
       }
       
       .blueprint-success-detail-label {
-        font-weight: 700;
+        font-weight: 600;
         color: ${primaryColor};
-        min-width: 80px;
+        white-space: nowrap;
+        flex-shrink: 0;
       }
       
       .blueprint-success-detail-value {
@@ -677,20 +698,24 @@ export const UploadBlueprintToMake = {
       
       .blueprint-success-actions {
         display: flex;
-        gap: 12px;
+        gap: 10px;
       }
       
       .blueprint-success-btn {
         flex: 1;
-        padding: 12px 20px;
-        border-radius: 12px;
-        border: 2px solid ${primaryColor}30;
+        padding: 11px 14px;
+        border-radius: 10px;
+        border: 1.5px solid ${primaryColor}25;
         background: white;
         color: ${primaryColor};
         font-weight: 600;
-        font-size: 14px;
+        font-size: 12px;
         cursor: pointer;
         transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
       }
       
       .blueprint-success-btn:hover:not(:disabled) {
@@ -713,76 +738,79 @@ export const UploadBlueprintToMake = {
       /* ====== ERROR CARD ====== */
       .blueprint-error-card {
         display: none;
-        background: linear-gradient(145deg, #FEF2F2, #FEE2E2);
-        border-radius: 24px;
-        padding: 32px 24px;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        background: #FEF2F2;
+        border-radius: 16px;
+        padding: 24px 20px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
         border: 2px solid #FCA5A5;
         text-align: center;
       }
       
       .blueprint-error-card.active {
         display: block;
-        animation: slideUp 0.4s ease-out;
+        animation: slideUp 0.3s ease-out;
       }
       
       .blueprint-error-icon {
-        font-size: 56px;
-        margin-bottom: 16px;
+        font-size: 44px;
+        margin-bottom: 12px;
+        display: block;
       }
       
       .blueprint-error-title {
-        font-size: 20px;
+        font-size: 17px;
         font-weight: 700;
         color: #991B1B;
-        margin-bottom: 12px;
+        margin: 0 0 8px 0;
       }
       
       .blueprint-error-message {
         color: #B91C1C;
-        font-size: 14px;
-        margin-bottom: 24px;
-        line-height: 1.5;
+        font-size: 12px;
+        margin: 0 0 18px 0;
+        line-height: 1.4;
       }
       
       .blueprint-error-actions {
         display: flex;
-        gap: 12px;
+        gap: 10px;
         justify-content: center;
       }
       
       .blueprint-retry-btn {
-        padding: 14px 28px;
+        padding: 11px 20px;
         background: linear-gradient(135deg, #EF4444, #DC2626);
         color: white;
         border: none;
-        border-radius: 12px;
-        font-weight: 700;
-        font-size: 14px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 12px;
         cursor: pointer;
         transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
       }
       
       .blueprint-retry-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
       }
       
       .blueprint-back-btn {
-        padding: 14px 28px;
+        padding: 11px 20px;
         background: #e5e7eb;
         color: #374151;
         border: none;
-        border-radius: 12px;
-        font-weight: 700;
-        font-size: 14px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 12px;
         cursor: pointer;
         transition: all 0.2s;
       }
       
       .blueprint-back-btn:hover {
         background: #d1d5db;
-        transform: translateY(-2px);
       }
     `;
     
