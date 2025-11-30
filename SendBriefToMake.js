@@ -551,6 +551,7 @@ export const SendBriefToMake = {
     let currentProgress = 0;
     let animationTimer = null;
     let chatRefs = null; // Référence pour réactiver le chat
+    let blobUrls = []; // Stocker les URLs blob pour les révoquer plus tard
     
     // ============ PROGRESS ANIMATION ============
     function updateProgress(percent, stepLabel) {
@@ -594,8 +595,24 @@ export const SendBriefToMake = {
     }
     
     // ============ CONVERT JSON TO DOWNLOADABLE FILE ============
+    function cleanupBlobUrls() {
+      // Révoquer toutes les anciennes URLs blob
+      blobUrls.forEach(url => {
+        try {
+          URL.revokeObjectURL(url);
+          console.log('[SendBriefToMake] 🧹 URL blob révoquée');
+        } catch (e) {
+          // Ignore
+        }
+      });
+      blobUrls = [];
+    }
+    
     function createJsonDownloadUrl(jsonData, fileName) {
       try {
+        // Nettoyer les anciennes URLs blob d'abord
+        cleanupBlobUrls();
+        
         let jsonString;
         
         // Si c'est déjà une string, vérifier si c'est du JSON valide
@@ -613,9 +630,12 @@ export const SendBriefToMake = {
           jsonString = JSON.stringify(jsonData, null, 2);
         }
         
-        // Créer le Blob
-        const blob = new Blob([jsonString], { type: 'application/json' });
+        // Créer le Blob avec un timestamp pour éviter le cache
+        const blob = new Blob([jsonString], { type: 'application/json;charset=utf-8' });
         const url = URL.createObjectURL(blob);
+        
+        // Stocker l'URL pour pouvoir la révoquer plus tard
+        blobUrls.push(url);
         
         console.log('[SendBriefToMake] 📦 Fichier JSON créé:', {
           fileName: fileName,
@@ -692,10 +712,11 @@ export const SendBriefToMake = {
         let downloadButtons = '';
         
         if (blueprintUrl) {
+          const uniqueId = Date.now(); // ID unique pour éviter les conflits de cache
           if (isJsonBlueprint) {
             // Bouton avec download attribute pour forcer le téléchargement
             downloadButtons += `
-              <a href="${blueprintUrl}" download="${blueprintFileName}" class="pistache-download-btn" id="pistache-download-blueprint">
+              <a href="${blueprintUrl}" download="${blueprintFileName}" class="pistache-download-btn" id="pistache-download-blueprint-${uniqueId}">
                 <span class="pistache-download-btn-icon">⬇️</span>
                 Télécharger le Blueprint JSON
               </a>
@@ -703,7 +724,7 @@ export const SendBriefToMake = {
           } else {
             // Lien classique vers URL externe
             downloadButtons += `
-              <a href="${blueprintUrl}" download class="pistache-download-btn" target="_blank">
+              <a href="${blueprintUrl}" download class="pistache-download-btn" target="_blank" id="pistache-download-blueprint-${uniqueId}">
                 <span class="pistache-download-btn-icon">⬇️</span>
                 Télécharger le Blueprint JSON
               </a>
@@ -757,6 +778,8 @@ export const SendBriefToMake = {
           questionBtn.disabled = true;
           newBtn.disabled = true;
           
+          // On NE nettoie PAS les URLs blob ici - l'user peut encore télécharger
+          
           // Réactiver le chat
           enableChatInput(chatRefs);
           console.log('[SendBriefToMake] 🔓 Chat réactivé');
@@ -790,6 +813,9 @@ export const SendBriefToMake = {
           newBtn.classList.add('selected');
           newBtn.disabled = true;
           questionBtn.disabled = true;
+          
+          // Nettoyer les URLs blob avant de partir
+          cleanupBlobUrls();
           
           // Réactiver le chat
           enableChatInput(chatRefs);
@@ -853,6 +879,17 @@ export const SendBriefToMake = {
     // ============ SEND BRIEF TO MAKE ============
     async function sendBriefToMake() {
       console.log('[SendBriefToMake] 🚀 Début envoi vers Make...');
+      
+      // Réinitialiser l'interface
+      cleanupBlobUrls();
+      loaderCard.style.display = 'block';
+      resultCard.style.display = 'none';
+      resultCard.innerHTML = '';
+      errorCard.style.display = 'none';
+      errorCard.innerHTML = '';
+      currentProgress = 0;
+      updateProgress(0, phases[0]?.text || 'Démarrage...');
+      
       startProgressAnimation();
       
       // Body de base avec le brief (obligatoire)
@@ -992,6 +1029,7 @@ export const SendBriefToMake = {
     // Cleanup
     return () => {
       stopProgressAnimation();
+      cleanupBlobUrls();
       if (chatRefs) {
         enableChatInput(chatRefs);
       }
