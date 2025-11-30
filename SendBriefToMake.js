@@ -561,7 +561,7 @@ export const SendBriefToMake = {
         
         resultCard.style.display = 'block';
         
-        // Event listeners
+        // Event listeners sur les boutons UNIQUEMENT
         resultCard.querySelector('#pistache-question-btn')?.addEventListener('click', () => {
           try {
             window?.voiceflow?.chat?.interact?.({
@@ -597,25 +597,7 @@ export const SendBriefToMake = {
           }
         });
         
-        // Auto-complete après délai
-        setTimeout(() => {
-          try {
-            window?.voiceflow?.chat?.interact?.({
-              type: 'complete',
-              payload: {
-                webhookSuccess: true,
-                webhookResponse: {
-                  blueprintUrl: blueprintUrl,
-                  userManualLink: userManualLink,
-                  description: description
-                },
-                buttonPath: pathSuccess
-              }
-            });
-          } catch (e) {
-            console.error('Erreur interact:', e);
-          }
-        }, autoCloseDelayMs);
+        // PAS d'auto-complete : on attend que l'user clique sur un bouton
         
       }, 800);
     }
@@ -653,6 +635,7 @@ export const SendBriefToMake = {
     
     // ============ SEND BRIEF TO MAKE ============
     async function sendBriefToMake() {
+      console.log('[SendBriefToMake] 🚀 Début envoi vers Make...');
       startProgressAnimation();
       
       // Body de base avec le brief (obligatoire)
@@ -667,12 +650,22 @@ export const SendBriefToMake = {
       if (vfContext.user_id) body.user_id = vfContext.user_id;
       if (vfContext.locale) body.locale = vfContext.locale;
       
+      console.log('[SendBriefToMake] 📦 Body préparé:', JSON.stringify(body).substring(0, 200) + '...');
+      
       let lastError;
       
       for (let attempt = 0; attempt <= webhookRetries; attempt++) {
         try {
+          console.log(`[SendBriefToMake] 📡 Tentative ${attempt + 1}/${webhookRetries + 1}...`);
+          
           const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), webhookTimeoutMs);
+          const timeoutId = setTimeout(() => {
+            console.log('[SendBriefToMake] ⏰ Timeout atteint, abort...');
+            controller.abort();
+          }, webhookTimeoutMs);
+          
+          console.log('[SendBriefToMake] ⏳ Envoi fetch et attente réponse Make...');
+          const startTime = Date.now();
           
           const response = await fetch(webhookUrl, {
             method: webhookMethod,
@@ -683,28 +676,49 @@ export const SendBriefToMake = {
           
           clearTimeout(timeoutId);
           
+          const elapsed = Date.now() - startTime;
+          console.log(`[SendBriefToMake] ✅ Réponse reçue en ${elapsed}ms, status: ${response.status}`);
+          
           if (!response.ok) {
             const text = await response.text().catch(() => '');
             throw new Error(`Erreur ${response.status} : ${text.slice(0, 200) || response.statusText}`);
           }
           
-          const data = await response.json().catch(() => ({}));
+          // Attendre et parser la réponse JSON
+          const responseText = await response.text();
+          console.log('[SendBriefToMake] 📄 Réponse brute:', responseText.substring(0, 300) + '...');
+          
+          let data = {};
+          try {
+            data = JSON.parse(responseText);
+            console.log('[SendBriefToMake] 📦 Réponse parsée:', Object.keys(data));
+          } catch (parseError) {
+            console.warn('[SendBriefToMake] ⚠️ Réponse non-JSON:', responseText.substring(0, 100));
+          }
+          
+          // Vérifier qu'on a bien les données attendues
+          if (!data.blueprintUrl && !data.description) {
+            console.warn('[SendBriefToMake] ⚠️ Réponse incomplète, données manquantes');
+          }
           
           // Succès !
+          console.log('[SendBriefToMake] 🎉 Succès, affichage résultat...');
           showResult(data);
           return;
           
         } catch (error) {
           lastError = error;
-          console.error(`[SendBriefToMake] Tentative ${attempt + 1} échouée:`, error);
+          console.error(`[SendBriefToMake] ❌ Tentative ${attempt + 1} échouée:`, error.message);
           
           if (attempt < webhookRetries) {
+            console.log('[SendBriefToMake] 🔄 Retry dans 1s...');
             await new Promise(resolve => setTimeout(resolve, 1000));
           }
         }
       }
       
       // Toutes les tentatives ont échoué
+      console.error('[SendBriefToMake] ❌ Toutes les tentatives ont échoué');
       showError(lastError?.message || 'Une erreur est survenue. Vérifie ta connexion et réessaie !');
     }
     
