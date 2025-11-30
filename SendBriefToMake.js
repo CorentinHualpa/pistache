@@ -1,6 +1,7 @@
-// SendBriefToMake.js – v1.0
+// SendBriefToMake.js – v1.1
 // Extension Voiceflow pour envoyer un brief vers Make et recevoir un blueprint
 // © Corentin & Mélissa – Pistache 🐢
+// v1.1 : Désactivation chat + grisage boutons
 
 export const SendBriefToMake = {
   name: 'SendBriefToMake',
@@ -25,6 +26,79 @@ export const SendBriefToMake = {
       return;
     }
     
+    // ============ FONCTIONS POUR DÉSACTIVER LE CHAT ============
+    const findChatContainer = () => {
+      let container = document.querySelector('#voiceflow-chat-container');
+      if (container?.shadowRoot) return container;
+      
+      container = document.querySelector('#voiceflow-chat');
+      if (container?.shadowRoot) return container;
+      
+      const allWithShadow = document.querySelectorAll('*');
+      for (const el of allWithShadow) {
+        if (el.shadowRoot?.querySelector('[class*="vfrc"]')) return el;
+      }
+      return null;
+    };
+    
+    const disableChatInput = () => {
+      const container = findChatContainer();
+      if (!container?.shadowRoot) return null;
+      
+      const shadowRoot = container.shadowRoot;
+      const textarea = 
+        shadowRoot.querySelector('textarea.vfrc-chat-input') ||
+        shadowRoot.querySelector('textarea[id^="vf-chat-input"]') ||
+        shadowRoot.querySelector('textarea');
+      
+      const sendBtn = 
+        shadowRoot.querySelector('#vfrc-send-message') ||
+        shadowRoot.querySelector('button.vfrc-chat-input__send') ||
+        shadowRoot.querySelector('button[type="submit"]');
+      
+      if (textarea) {
+        const originalPlaceholder = textarea.placeholder;
+        textarea.disabled = true;
+        textarea.style.opacity = '0.5';
+        textarea.style.cursor = 'not-allowed';
+        textarea.placeholder = '🐢 Clique sur un bouton pour continuer...';
+        
+        if (sendBtn) {
+          sendBtn.disabled = true;
+          sendBtn.style.opacity = '0.5';
+          sendBtn.style.cursor = 'not-allowed';
+        }
+        
+        return { container, textarea, sendBtn, originalPlaceholder };
+      }
+      return null;
+    };
+    
+    const enableChatInput = (chatRefs) => {
+      if (!chatRefs?.container?.shadowRoot) return false;
+      
+      const { textarea, sendBtn, originalPlaceholder } = chatRefs;
+      
+      if (textarea) {
+        textarea.disabled = false;
+        textarea.style.opacity = '1';
+        textarea.style.cursor = 'text';
+        textarea.placeholder = originalPlaceholder || 'Message...';
+      }
+      
+      if (sendBtn) {
+        sendBtn.disabled = false;
+        sendBtn.style.opacity = '1';
+        sendBtn.style.cursor = 'pointer';
+      }
+      
+      if (textarea) {
+        setTimeout(() => { textarea.focus(); textarea.blur(); }, 100);
+      }
+      
+      return true;
+    };
+    
     // ============ CONFIG ============
     const p = trace?.payload || {};
     
@@ -32,10 +106,10 @@ export const SendBriefToMake = {
     const briefContent = p.brief || '';
     
     // Branding Pistache 🐢
-    const primaryColor   = p.primaryColor   || '#1E3A3A';  // Vert foncé (corps)
-    const secondaryColor = p.secondaryColor || '#2D5A5A';  // Vert turquoise
-    const accentColor    = p.accentColor    || '#E91E8C';  // Rose magenta (carapace)
-    const highlightColor = p.highlightColor || '#4ECDC4';  // Turquoise clair (reflets)
+    const primaryColor   = p.primaryColor   || '#1E3A3A';
+    const secondaryColor = p.secondaryColor || '#2D5A5A';
+    const accentColor    = p.accentColor    || '#E91E8C';
+    const highlightColor = p.highlightColor || '#4ECDC4';
     
     // GIF Pistache qui danse
     const pistacheGif = p.pistacheGif || 'https://i.imgur.com/cnV2pB1.gif';
@@ -51,7 +125,7 @@ export const SendBriefToMake = {
     const webhookUrl       = webhook.url;
     const webhookMethod    = (webhook.method || 'POST').toUpperCase();
     const webhookHeaders   = webhook.headers || { 'Content-Type': 'application/json' };
-    const webhookTimeoutMs = Number.isFinite(webhook.timeoutMs) ? webhook.timeoutMs : 300000; // 5 minutes par défaut
+    const webhookTimeoutMs = Number.isFinite(webhook.timeoutMs) ? webhook.timeoutMs : 300000;
     const webhookRetries   = Number.isFinite(webhook.retries) ? webhook.retries : 1;
     const extra            = webhook.extra || {};
     
@@ -75,7 +149,6 @@ export const SendBriefToMake = {
     // Loader config
     const loaderCfg = p.loader || {};
     const estimatedSeconds = Number(loaderCfg.estimatedSeconds) > 0 ? Number(loaderCfg.estimatedSeconds) : 30;
-    const autoCloseDelayMs = Number(loaderCfg.autoCloseDelayMs) > 0 ? Number(loaderCfg.autoCloseDelayMs) : 2000;
     
     // Phases d'animation
     const defaultPhases = [
@@ -127,14 +200,6 @@ export const SendBriefToMake = {
       @keyframes fadeIn {
         from { opacity: 0; }
         to { opacity: 1; }
-      }
-      @keyframes fadeOut {
-        from { opacity: 1; }
-        to { opacity: 0; }
-      }
-      @keyframes confetti {
-        0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-        100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
       }
       @keyframes shimmer {
         0% { background-position: -200% 0; }
@@ -314,6 +379,8 @@ export const SendBriefToMake = {
         font-size: 14px;
         line-height: 1.6;
         white-space: pre-wrap;
+        max-height: 150px;
+        overflow-y: auto;
       }
       
       .pistache-download-btn {
@@ -365,10 +432,24 @@ export const SendBriefToMake = {
         transition: all 0.2s;
       }
       
-      .pistache-action-btn:hover {
+      .pistache-action-btn:hover:not(:disabled) {
         background: ${primaryColor};
         color: white;
         border-color: ${primaryColor};
+      }
+      
+      .pistache-action-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        background: #e5e7eb;
+        border-color: #d1d5db;
+        color: #9ca3af;
+      }
+      
+      .pistache-action-btn.selected {
+        background: ${accentColor};
+        color: white;
+        border-color: ${accentColor};
       }
       
       /* ====== ERROR STATE ====== */
@@ -456,7 +537,6 @@ export const SendBriefToMake = {
         <!-- Rempli dynamiquement -->
       </div>
     `;
-    
     element.appendChild(root);
     
     // ============ DOM REFS ============
@@ -467,10 +547,12 @@ export const SendBriefToMake = {
     const stepText    = root.querySelector('#pistache-step');
     const percentText = root.querySelector('#pistache-percent');
     
-    // ============ PROGRESS ANIMATION ============
+    // ============ STATE ============
     let currentProgress = 0;
     let animationTimer = null;
+    let chatRefs = null; // Référence pour réactiver le chat
     
+    // ============ PROGRESS ANIMATION ============
     function updateProgress(percent, stepLabel) {
       currentProgress = Math.min(100, Math.max(0, percent));
       progressBar.style.width = `${currentProgress}%`;
@@ -488,11 +570,8 @@ export const SendBriefToMake = {
       animationTimer = setInterval(() => {
         const elapsed = Date.now() - startTime;
         const rawProgress = (elapsed / totalMs) * 100;
-        
-        // Ne pas dépasser 95% avant la vraie réponse
         const cappedProgress = Math.min(rawProgress, 95);
         
-        // Trouver la phase actuelle
         while (phaseIndex < phases.length - 1 && phases[phaseIndex + 1].progress <= cappedProgress) {
           phaseIndex++;
         }
@@ -514,6 +593,68 @@ export const SendBriefToMake = {
       }
     }
     
+    // ============ CONVERT JSON TO DOWNLOADABLE FILE ============
+    function createJsonDownloadUrl(jsonData, fileName) {
+      try {
+        let jsonString;
+        
+        // Si c'est déjà une string, vérifier si c'est du JSON valide
+        if (typeof jsonData === 'string') {
+          // Essayer de parser pour valider et reformater
+          try {
+            const parsed = JSON.parse(jsonData);
+            jsonString = JSON.stringify(parsed, null, 2); // Pretty print
+          } catch (e) {
+            // Si ce n'est pas du JSON valide, utiliser tel quel
+            jsonString = jsonData;
+          }
+        } else {
+          // Si c'est un objet, le convertir en string
+          jsonString = JSON.stringify(jsonData, null, 2);
+        }
+        
+        // Créer le Blob
+        const blob = new Blob([jsonString], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        
+        console.log('[SendBriefToMake] 📦 Fichier JSON créé:', {
+          fileName: fileName,
+          size: blob.size,
+          url: url.substring(0, 50) + '...'
+        });
+        
+        return url;
+      } catch (error) {
+        console.error('[SendBriefToMake] ❌ Erreur création fichier JSON:', error);
+        return null;
+      }
+    }
+    
+    function isUrl(str) {
+      if (typeof str !== 'string') return false;
+      return str.startsWith('http://') || str.startsWith('https://');
+    }
+    
+    function isJsonString(str) {
+      if (typeof str !== 'string') return false;
+      const trimmed = str.trim();
+      return (trimmed.startsWith('{') && trimmed.endsWith('}')) || 
+             (trimmed.startsWith('[') && trimmed.endsWith(']'));
+    }
+    
+    function extractBlueprintName(jsonData) {
+      try {
+        let data = jsonData;
+        if (typeof jsonData === 'string') {
+          data = JSON.parse(jsonData);
+        }
+        // Chercher un nom dans différents champs possibles
+        return data.name || data.scenarioName || data.title || 'blueprint-pistache';
+      } catch (e) {
+        return 'blueprint-pistache';
+      }
+    }
+    
     // ============ DISPLAY RESULT ============
     function showResult(data) {
       stopProgressAnimation();
@@ -522,20 +663,52 @@ export const SendBriefToMake = {
       setTimeout(() => {
         loaderCard.style.display = 'none';
         
-        const blueprintUrl = data?.blueprintUrl || data?.url || '';
+        const blueprintData = data?.blueprintUrl || data?.blueprint || data?.url || '';
         const userManualLink = data?.userManualLink || '';
         const description = data?.description || 'Blueprint généré avec succès !';
+        
+        // Déterminer si c'est une URL ou du JSON
+        let blueprintUrl = '';
+        let blueprintFileName = '';
+        let isJsonBlueprint = false;
+        
+        if (blueprintData) {
+          if (isUrl(blueprintData)) {
+            // C'est une URL classique
+            blueprintUrl = blueprintData;
+            console.log('[SendBriefToMake] 🔗 Blueprint est une URL:', blueprintUrl.substring(0, 50) + '...');
+          } else if (isJsonString(blueprintData) || typeof blueprintData === 'object') {
+            // C'est du JSON, créer un fichier téléchargeable
+            isJsonBlueprint = true;
+            blueprintFileName = extractBlueprintName(blueprintData) + '.json';
+            blueprintUrl = createJsonDownloadUrl(blueprintData, blueprintFileName);
+            console.log('[SendBriefToMake] 📄 Blueprint converti en fichier:', blueprintFileName);
+          } else {
+            console.warn('[SendBriefToMake] ⚠️ Format de blueprint inconnu');
+          }
+        }
         
         // Construire les boutons de téléchargement
         let downloadButtons = '';
         
         if (blueprintUrl) {
-          downloadButtons += `
-            <a href="${blueprintUrl}" download class="pistache-download-btn" target="_blank">
-              <span class="pistache-download-btn-icon">⬇️</span>
-              Télécharger le Blueprint JSON
-            </a>
-          `;
+          if (isJsonBlueprint) {
+            // Bouton avec download attribute pour forcer le téléchargement
+            downloadButtons += `
+              <a href="${blueprintUrl}" download="${blueprintFileName}" class="pistache-download-btn" id="pistache-download-blueprint">
+                <span class="pistache-download-btn-icon">⬇️</span>
+                Télécharger le Blueprint JSON
+              </a>
+            `;
+          } else {
+            // Lien classique vers URL externe
+            downloadButtons += `
+              <a href="${blueprintUrl}" download class="pistache-download-btn" target="_blank">
+                <span class="pistache-download-btn-icon">⬇️</span>
+                Télécharger le Blueprint JSON
+              </a>
+            `;
+          }
         }
         
         if (userManualLink) {
@@ -567,8 +740,28 @@ export const SendBriefToMake = {
         
         resultCard.style.display = 'block';
         
-        // Event listeners sur les boutons UNIQUEMENT
-        resultCard.querySelector('#pistache-question-btn')?.addEventListener('click', () => {
+        // Désactiver le chat tant que l'user n'a pas cliqué sur un bouton
+        chatRefs = disableChatInput();
+        console.log('[SendBriefToMake] 🔒 Chat désactivé, en attente du clic utilisateur');
+        
+        // Récupérer les boutons
+        const questionBtn = resultCard.querySelector('#pistache-question-btn');
+        const newBtn = resultCard.querySelector('#pistache-new-btn');
+        
+        // Event listener pour "Une question ?"
+        questionBtn?.addEventListener('click', () => {
+          console.log('[SendBriefToMake] 💬 Bouton Question cliqué');
+          
+          // Griser l'autre bouton et marquer celui-ci comme sélectionné
+          questionBtn.classList.add('selected');
+          questionBtn.disabled = true;
+          newBtn.disabled = true;
+          
+          // Réactiver le chat
+          enableChatInput(chatRefs);
+          console.log('[SendBriefToMake] 🔓 Chat réactivé');
+          
+          // Envoyer l'event à Voiceflow
           try {
             window?.voiceflow?.chat?.interact?.({
               type: 'complete',
@@ -583,12 +776,26 @@ export const SendBriefToMake = {
                 buttonPath: 'question'
               }
             });
+            console.log('[SendBriefToMake] ✅ Event envoyé: action=question, buttonPath=question');
           } catch (e) {
-            console.error('Erreur interact:', e);
+            console.error('[SendBriefToMake] ❌ Erreur interact:', e);
           }
         });
         
-        resultCard.querySelector('#pistache-new-btn')?.addEventListener('click', () => {
+        // Event listener pour "Nouveau blueprint"
+        newBtn?.addEventListener('click', () => {
+          console.log('[SendBriefToMake] 🔧 Bouton NewBlueprint cliqué');
+          
+          // Griser l'autre bouton et marquer celui-ci comme sélectionné
+          newBtn.classList.add('selected');
+          newBtn.disabled = true;
+          questionBtn.disabled = true;
+          
+          // Réactiver le chat
+          enableChatInput(chatRefs);
+          console.log('[SendBriefToMake] 🔓 Chat réactivé');
+          
+          // Envoyer l'event à Voiceflow
           try {
             window?.voiceflow?.chat?.interact?.({
               type: 'complete',
@@ -598,12 +805,11 @@ export const SendBriefToMake = {
                 buttonPath: 'new'
               }
             });
+            console.log('[SendBriefToMake] ✅ Event envoyé: action=new_blueprint, buttonPath=new');
           } catch (e) {
-            console.error('Erreur interact:', e);
+            console.error('[SendBriefToMake] ❌ Erreur interact:', e);
           }
         });
-        
-        // PAS d'auto-complete : on attend que l'user clique sur un bouton
         
       }, 800);
     }
@@ -613,6 +819,11 @@ export const SendBriefToMake = {
       stopProgressAnimation();
       
       loaderCard.style.display = 'none';
+      
+      // Réactiver le chat en cas d'erreur
+      if (chatRefs) {
+        enableChatInput(chatRefs);
+      }
       
       errorCard.innerHTML = `
         <div class="pistache-error-icon">😅</div>
@@ -630,7 +841,7 @@ export const SendBriefToMake = {
             payload: {
               webhookSuccess: false,
               action: 'retry',
-              buttonPath: pathError
+              buttonPath: 'error'
             }
           });
         } catch (e) {
@@ -695,16 +906,63 @@ export const SendBriefToMake = {
           console.log('[SendBriefToMake] 📄 Réponse brute:', responseText.substring(0, 300) + '...');
           
           let data = {};
+          
+          // Essayer de parser le JSON normalement
           try {
             data = JSON.parse(responseText);
             console.log('[SendBriefToMake] 📦 Réponse parsée:', Object.keys(data));
+            
+            // Vérifier si blueprintUrl est du JSON stringifié
+            if (data.blueprintUrl && typeof data.blueprintUrl === 'string') {
+              const trimmed = data.blueprintUrl.trim();
+              if ((trimmed.startsWith('{') && trimmed.endsWith('}')) || 
+                  (trimmed.startsWith('[') && trimmed.endsWith(']'))) {
+                console.log('[SendBriefToMake] 📄 blueprintUrl contient du JSON');
+              } else if (trimmed.startsWith('http')) {
+                console.log('[SendBriefToMake] 🔗 blueprintUrl est une URL');
+              }
+            }
           } catch (parseError) {
-            console.warn('[SendBriefToMake] ⚠️ Réponse non-JSON:', responseText.substring(0, 100));
+            console.warn('[SendBriefToMake] ⚠️ JSON invalide, extraction par regex...');
+            
+            // Extraction robuste par regex si JSON invalide
+            // Pour blueprintUrl qui peut être une URL ou du JSON
+            const blueprintUrlMatch = responseText.match(/"blueprintUrl"\s*:\s*"(https?:\/\/[^"]+)"/);
+            if (blueprintUrlMatch) {
+              data.blueprintUrl = blueprintUrlMatch[1];
+              console.log('[SendBriefToMake] ✅ blueprintUrl (URL) extrait:', data.blueprintUrl);
+            } else {
+              // Essayer d'extraire un JSON complet après "blueprintUrl":
+              const jsonMatch = responseText.match(/"blueprintUrl"\s*:\s*(\{[\s\S]*?\}(?=\s*,\s*"|$))/);
+              if (jsonMatch) {
+                data.blueprintUrl = jsonMatch[1];
+                console.log('[SendBriefToMake] ✅ blueprintUrl (JSON) extrait');
+              }
+            }
+            
+            const userManualMatch = responseText.match(/"userManualLink"\s*:\s*"([^"]+)"/);
+            if (userManualMatch) {
+              data.userManualLink = userManualMatch[1];
+              console.log('[SendBriefToMake] ✅ userManualLink extrait:', data.userManualLink);
+            }
+            
+            const successMatch = responseText.match(/"success"\s*:\s*(true|false|"true"|"false")/);
+            if (successMatch) {
+              data.success = successMatch[1] === 'true' || successMatch[1] === '"true"';
+            }
+            
+            data.description = 'Blueprint généré avec succès ! Consultez le guide d\'utilisation pour les instructions de configuration.';
           }
           
           // Vérifier qu'on a bien les données attendues
-          if (!data.blueprintUrl && !data.description) {
-            console.warn('[SendBriefToMake] ⚠️ Réponse incomplète, données manquantes');
+          if (!data.blueprintUrl && !data.userManualLink) {
+            console.warn('[SendBriefToMake] ⚠️ Aucune donnée blueprint extraite de la réponse');
+          } else {
+            console.log('[SendBriefToMake] ✅ Données extraites:', {
+              blueprintUrl: data.blueprintUrl ? (typeof data.blueprintUrl === 'string' ? (data.blueprintUrl.startsWith('http') ? 'URL' : 'JSON') : 'Object') : '✗',
+              userManualLink: data.userManualLink ? '✓' : '✗',
+              description: data.description ? '✓' : '✗'
+            });
           }
           
           // Succès !
@@ -734,6 +992,9 @@ export const SendBriefToMake = {
     // Cleanup
     return () => {
       stopProgressAnimation();
+      if (chatRefs) {
+        enableChatInput(chatRefs);
+      }
     };
   }
 };
