@@ -183,6 +183,17 @@ export const UploadBlueprintToMake = {
     
     // ============ STYLES ============
     const styles = `
+      /* Force full width on Voiceflow parent containers */
+      .vfrc-message--extension-UploadBlueprintToMake {
+        max-width: 100% !important;
+        width: 100% !important;
+      }
+      
+      .vfrc-message--extension-UploadBlueprintToMake > span {
+        display: block !important;
+        width: 100% !important;
+      }
+      
       @keyframes pistacheDance {
         0%, 100% { transform: translateY(0) rotate(-2deg); }
         25% { transform: translateY(-8px) rotate(2deg); }
@@ -216,11 +227,13 @@ export const UploadBlueprintToMake = {
       }
       
       .blueprint-upload-wrap {
-        width: 100%;
-        max-width: 100%;
+        width: 100% !important;
+        max-width: 100% !important;
         animation: slideUp 0.3s ease-out;
         font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         box-sizing: border-box;
+        margin: 0;
+        padding: 0;
       }
       
       .blueprint-upload-wrap * {
@@ -228,6 +241,7 @@ export const UploadBlueprintToMake = {
       }
       
       .blueprint-upload-card {
+        width: 100%;
         background: linear-gradient(145deg, #FFFFFF, #F8FAFC);
         border-radius: 16px;
         padding: 20px;
@@ -235,6 +249,7 @@ export const UploadBlueprintToMake = {
         border: 2px solid ${accentColor}30;
         position: relative;
         overflow: hidden;
+        margin: 0;
       }
       
       .blueprint-upload-header {
@@ -523,6 +538,7 @@ export const UploadBlueprintToMake = {
       /* ====== LOADER ====== */
       .blueprint-loader {
         display: none;
+        width: 100%;
         background: linear-gradient(145deg, ${primaryColor}, ${secondaryColor});
         border-radius: 16px;
         padding: 24px 20px;
@@ -530,6 +546,7 @@ export const UploadBlueprintToMake = {
         border: 2px solid ${accentColor};
         position: relative;
         overflow: hidden;
+        margin: 0;
       }
       
       .blueprint-loader.active {
@@ -629,12 +646,14 @@ export const UploadBlueprintToMake = {
       /* ====== SUCCESS CARD ====== */
       .blueprint-success-card {
         display: none;
+        width: 100%;
         background: linear-gradient(145deg, #FFFFFF, #F8FAFC);
         border-radius: 16px;
         padding: 24px 20px;
         box-shadow: 0 2px 12px rgba(0,0,0,0.08);
         border: 2px solid ${highlightColor};
         text-align: center;
+        margin: 0;
       }
       
       .blueprint-success-card.active {
@@ -738,12 +757,14 @@ export const UploadBlueprintToMake = {
       /* ====== ERROR CARD ====== */
       .blueprint-error-card {
         display: none;
+        width: 100%;
         background: #FEF2F2;
         border-radius: 16px;
         padding: 24px 20px;
         box-shadow: 0 2px 12px rgba(0,0,0,0.08);
         border: 2px solid #FCA5A5;
         text-align: center;
+        margin: 0;
       }
       
       .blueprint-error-card.active {
