@@ -1,8 +1,7 @@
-// SendBriefToMake.js – v1.1
+// SendBriefToMake.js – v1.2
 // Extension Voiceflow pour envoyer un brief vers Make et recevoir un blueprint
 // © Corentin & Mélissa – Pistache 🐢
-// v1.1 : Désactivation chat + grisage boutons
-
+// v1.2 : Fix centrage + largeur des cartes
 export const SendBriefToMake = {
   name: 'SendBriefToMake',
   type: 'response',
@@ -209,14 +208,25 @@ export const SendBriefToMake = {
       .pistache-loader-wrap {
         width: 100%;
         max-width: 100%;
+        min-width: 280px;
+        box-sizing: border-box;
         animation: slideUp 0.4s ease-out;
         font-family: 'Segoe UI', system-ui, sans-serif;
+        margin: 0 auto;
+        padding: 8px 0;
+      }
+      
+      .pistache-loader-wrap * {
+        box-sizing: border-box;
       }
       
       .pistache-loader-card {
         background: linear-gradient(145deg, ${primaryColor}, ${secondaryColor});
         border-radius: 24px;
         padding: 32px 24px;
+        width: 100%;
+        max-width: 420px;
+        margin: 0 auto;
         box-shadow: 
           0 20px 60px rgba(0,0,0,0.3),
           0 0 0 3px ${accentColor},
@@ -329,6 +339,9 @@ export const SendBriefToMake = {
         background: linear-gradient(145deg, #FFFFFF, #F8FAFC);
         border-radius: 24px;
         padding: 32px 24px;
+        width: 100%;
+        max-width: 420px;
+        margin: 0 auto;
         box-shadow: 
           0 20px 60px rgba(0,0,0,0.15),
           0 0 0 3px ${accentColor};
@@ -344,6 +357,7 @@ export const SendBriefToMake = {
       
       .pistache-result-icon {
         font-size: 48px;
+        flex-shrink: 0;
       }
       
       .pistache-result-title {
@@ -457,6 +471,9 @@ export const SendBriefToMake = {
         background: linear-gradient(145deg, #FEF2F2, #FEE2E2);
         border-radius: 24px;
         padding: 32px 24px;
+        width: 100%;
+        max-width: 420px;
+        margin: 0 auto;
         box-shadow: 0 10px 40px rgba(0,0,0,0.1);
         border: 2px solid #FCA5A5;
         text-align: center;
