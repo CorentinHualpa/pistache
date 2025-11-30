@@ -38,7 +38,7 @@ export const SendBriefToMake = {
     const highlightColor = p.highlightColor || '#4ECDC4';  // Turquoise clair (reflets)
     
     // GIF Pistache qui danse
-    const pistacheGif = p.pistacheGif || 'https://i.imgur.com/YOUR_GIF_ID.gif';
+    const pistacheGif = p.pistacheGif || 'https://i.imgur.com/cnV2pB1.gif';
     
     // Messages personnalisables
     const loadingTitle   = p.loadingTitle   || '🐢 Pistache prépare ton blueprint...';
@@ -516,8 +516,30 @@ export const SendBriefToMake = {
       setTimeout(() => {
         loaderCard.style.display = 'none';
         
-        const blueprintUrl = data?.blueprintUrl || data?.url || '#';
+        const blueprintUrl = data?.blueprintUrl || data?.url || '';
+        const userManualLink = data?.userManualLink || '';
         const description = data?.description || 'Blueprint généré avec succès !';
+        
+        // Construire les boutons de téléchargement
+        let downloadButtons = '';
+        
+        if (blueprintUrl) {
+          downloadButtons += `
+            <a href="${blueprintUrl}" download class="pistache-download-btn" target="_blank">
+              <span class="pistache-download-btn-icon">⬇️</span>
+              Télécharger le Blueprint JSON
+            </a>
+          `;
+        }
+        
+        if (userManualLink) {
+          downloadButtons += `
+            <a href="${userManualLink}" class="pistache-download-btn pistache-download-btn-secondary" target="_blank" style="background: linear-gradient(135deg, ${highlightColor}, #38B2AC); margin-top: 12px;">
+              <span class="pistache-download-btn-icon">📖</span>
+              Voir le Guide d'utilisation
+            </a>
+          `;
+        }
         
         resultCard.innerHTML = `
           <div class="pistache-result-header">
@@ -530,10 +552,7 @@ export const SendBriefToMake = {
             </div>
             <div class="pistache-result-description-content">${description}</div>
           </div>
-          <a href="${blueprintUrl}" download class="pistache-download-btn" target="_blank">
-            <span class="pistache-download-btn-icon">⬇️</span>
-            Télécharger le Blueprint JSON
-          </a>
+          ${downloadButtons}
           <div class="pistache-actions">
             <button class="pistache-action-btn" id="pistache-question-btn">💬 Une question ?</button>
             <button class="pistache-action-btn" id="pistache-new-btn">🔧 Nouveau blueprint</button>
@@ -550,7 +569,11 @@ export const SendBriefToMake = {
               payload: {
                 webhookSuccess: true,
                 action: 'question',
-                blueprintData: data,
+                blueprintData: {
+                  blueprintUrl: blueprintUrl,
+                  userManualLink: userManualLink,
+                  description: description
+                },
                 buttonPath: 'question'
               }
             });
@@ -581,7 +604,11 @@ export const SendBriefToMake = {
               type: 'complete',
               payload: {
                 webhookSuccess: true,
-                webhookResponse: data,
+                webhookResponse: {
+                  blueprintUrl: blueprintUrl,
+                  userManualLink: userManualLink,
+                  description: description
+                },
                 buttonPath: pathSuccess
               }
             });
@@ -628,14 +655,17 @@ export const SendBriefToMake = {
     async function sendBriefToMake() {
       startProgressAnimation();
       
+      // Body de base avec le brief (obligatoire)
       const body = {
         brief: briefContent,
         ...extra,
-        conversation_id: vfContext.conversation_id,
-        user_id: vfContext.user_id,
-        locale: vfContext.locale,
         timestamp: new Date().toISOString()
       };
+      
+      // Ajouter les champs optionnels seulement s'ils existent
+      if (vfContext.conversation_id) body.conversation_id = vfContext.conversation_id;
+      if (vfContext.user_id) body.user_id = vfContext.user_id;
+      if (vfContext.locale) body.locale = vfContext.locale;
       
       let lastError;
       
