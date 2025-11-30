@@ -51,9 +51,15 @@ export const SendBriefToMake = {
     const webhookUrl       = webhook.url;
     const webhookMethod    = (webhook.method || 'POST').toUpperCase();
     const webhookHeaders   = webhook.headers || { 'Content-Type': 'application/json' };
-    const webhookTimeoutMs = Number.isFinite(webhook.timeoutMs) ? webhook.timeoutMs : 120000;
+    const webhookTimeoutMs = Number.isFinite(webhook.timeoutMs) ? webhook.timeoutMs : 300000; // 5 minutes par défaut
     const webhookRetries   = Number.isFinite(webhook.retries) ? webhook.retries : 1;
     const extra            = webhook.extra || {};
+    
+    console.log('[SendBriefToMake] ⚙️ Config webhook:', {
+      url: webhookUrl?.substring(0, 50) + '...',
+      timeoutMs: webhookTimeoutMs,
+      retries: webhookRetries
+    });
     
     // Paths Voiceflow
     const pathSuccess = p.pathSuccess || 'Default';
