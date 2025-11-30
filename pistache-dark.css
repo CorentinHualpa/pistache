@@ -1,16 +1,10 @@
 /* ==========================================================
-   🐢 Pistache × Voiceflow — Dark Mode Ultra Stylé v1.0
+   🐢 Pistache × Voiceflow — Dark Mode Ultra Stylé v1.1
    
    Thème : Rose néon / Noir / Violet sombre
    Créé pour : https://corentinhualpa.github.io/pistache/
    
-   Features :
-   + Mode sombre complet
-   + Effets néon/glow sur les éléments interactifs
-   + Police Plus Jakarta Sans
-   + Boutons avec dégradés roses
-   + Scrollbar personnalisée
-   + Animations fluides
+   ⚠️ VERSION CORRIGÉE : Fonds OPAQUES
    ========================================================== */
 
 /* ==========================================================
@@ -28,16 +22,12 @@
   --pistache-pink-dark: #CC0052;
   --pistache-pink-glow: rgba(255, 0, 102, 0.4);
   
-  /* 🌙 Couleurs sombres */
+  /* 🌙 Couleurs sombres - OPAQUES */
   --dark-bg-primary: #0D0D14;
   --dark-bg-secondary: #13131D;
   --dark-bg-tertiary: #1A1A28;
   --dark-bg-elevated: #222233;
-  --dark-bg-card: rgba(26, 26, 40, 0.8);
-  
-  /* ✨ Couleurs d'accent */
-  --accent-purple: #6B21A8;
-  --accent-violet: #4C1D95;
+  --dark-bg-bubble: #2A2A3D;
   
   /* 📝 Textes */
   --text-primary: #F8FAFC;
@@ -45,11 +35,9 @@
   --text-muted: #64748B;
   --text-on-pink: #FFFFFF;
   
-  /* 🔲 Bordures & ombres */
-  --border-subtle: rgba(255, 255, 255, 0.08);
+  /* 🔲 Bordures */
+  --border-subtle: rgba(255, 255, 255, 0.1);
   --border-glow: rgba(255, 0, 102, 0.3);
-  --shadow-glow: 0 0 20px rgba(255, 0, 102, 0.3);
-  --shadow-glow-strong: 0 0 30px rgba(255, 0, 102, 0.5);
   
   /* 📐 Typographie */
   --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -75,18 +63,18 @@
 }
 
 /* ==========================================================
-   🎯 Conteneur principal — Fond sombre
+   🎯 CONTENEUR PRINCIPAL — FOND OPAQUE SOLIDE
    ========================================================== */
 .vfrc-widget,
 .vfrc-chat,
 .vfrc-chat__container,
-.vfrc-chat__container-inner {
-  background: var(--dark-bg-primary) !important;
-  border: 1px solid var(--border-subtle) !important;
+.vfrc-chat__container-inner,
+div.vfrc-widget,
+div.vfrc-chat {
+  background: #0D0D14 !important;
+  background-color: #0D0D14 !important;
   border-radius: 16px !important;
-  box-shadow: 
-    0 25px 50px -12px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
 }
 
 /* ==========================================================
@@ -96,9 +84,10 @@
 .vfrc-header--container-inner,
 div.vfrc-header,
 div.vfrc-header--container-inner {
-  background: linear-gradient(135deg, var(--pistache-pink), var(--pistache-pink-dark)) !important;
+  background: linear-gradient(135deg, #FF0066, #CC0052) !important;
+  background-color: #FF0066 !important;
   border-bottom: none !important;
-  box-shadow: var(--shadow-glow) !important;
+  box-shadow: 0 4px 20px rgba(255, 0, 102, 0.4) !important;
   padding: 16px 20px !important;
   position: relative !important;
 }
@@ -125,7 +114,7 @@ div.vfrc-header--title,
   font-size: var(--heading-2) !important;
   line-height: 1.3 !important;
   letter-spacing: -0.02em !important;
-  color: var(--text-on-pink) !important;
+  color: #FFFFFF !important;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
   padding: 0 !important;
   margin: 0 !important;
@@ -140,19 +129,24 @@ button.vfrc-header--button,
 }
 
 /* ==========================================================
-   💬 Zone de dialogue — Fond sombre
+   💬 ZONE DE DIALOGUE — FOND OPAQUE
    ========================================================== */
 .vfrc-chat--dialog,
 .vfrc-chat-dialog,
-.vfrc-chat-dialog__container {
-  background: var(--dark-bg-secondary) !important;
+.vfrc-chat-dialog__container,
+div.vfrc-chat--dialog,
+div.vfrc-chat-dialog {
+  background: #13131D !important;
+  background-color: #13131D !important;
   padding: 16px !important;
 }
 
 /* ==========================================================
-   🤖 Bulles système (Bot) — Style glassmorphism sombre
+   🤖 BULLES SYSTÈME (Bot) — FOND OPAQUE SOLIDE
    ========================================================== */
-.vfrc-system-response .vfrc-message:not([class*="extension"]) {
+.vfrc-system-response .vfrc-message:not([class*="extension"]),
+.vfrc-system-response .vfrc-message,
+.vfrc-system-response > div {
   font-family: var(--font-family) !important;
   font-weight: var(--font-regular) !important;
   font-size: var(--body-1) !important;
@@ -160,112 +154,118 @@ button.vfrc-header--button,
   letter-spacing: 0.01em !important;
   
   display: inline-block !important;
-  background: var(--dark-bg-elevated) !important;
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border-subtle) !important;
+  background: #2A2A3D !important;
+  background-color: #2A2A3D !important;
+  color: #F8FAFC !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
   border-radius: 16px 16px 16px 4px !important;
   padding: 14px 18px !important;
   max-width: 85% !important;
   
-  box-shadow: 
-    0 4px 15px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
   
   white-space: pre-wrap !important;
   word-break: break-word !important;
 }
 
 /* Texte dans les bulles système */
-.vfrc-system-response .vfrc-message:not([class*="extension"]) p,
-.vfrc-system-response .vfrc-message:not([class*="extension"]) span,
-.vfrc-system-response .vfrc-message:not([class*="extension"]) li {
+.vfrc-system-response .vfrc-message p,
+.vfrc-system-response .vfrc-message span,
+.vfrc-system-response .vfrc-message li,
+.vfrc-system-response .vfrc-message div {
   font-family: var(--font-family) !important;
   font-size: var(--body-1) !important;
-  color: var(--text-primary) !important;
+  color: #F8FAFC !important;
   line-height: 1.6 !important;
+  background: transparent !important;
 }
 
 /* Liens dans les messages */
 .vfrc-system-response .vfrc-message a {
-  color: var(--pistache-pink-light) !important;
+  color: #FF3385 !important;
   text-decoration: none !important;
   border-bottom: 1px solid transparent !important;
   transition: var(--transition-fast) !important;
 }
 
 .vfrc-system-response .vfrc-message a:hover {
-  border-bottom-color: var(--pistache-pink-light) !important;
+  border-bottom-color: #FF3385 !important;
 }
 
 /* ==========================================================
    📝 Hiérarchie typographique H1, H2, H3
    ========================================================== */
 /* H1 - Titre principal */
-.vfrc-system-response .vfrc-message:not([class*="extension"]) h1,
-.vfrc-system-response .vfrc-message:not([class*="extension"]) h1 * {
+.vfrc-system-response .vfrc-message h1,
+.vfrc-system-response .vfrc-message h1 * {
   font-family: var(--font-family) !important;
   font-weight: var(--font-bold) !important;
   font-size: var(--heading-1) !important;
   line-height: 1.4 !important;
-  color: var(--pistache-pink-light) !important;
+  color: #FF3385 !important;
   margin: 16px 0 10px 0 !important;
   padding-bottom: 8px !important;
-  border-bottom: 1px solid var(--border-glow) !important;
+  border-bottom: 1px solid rgba(255, 0, 102, 0.3) !important;
+  background: transparent !important;
 }
 
 /* H2 - Sous-titre important */
-.vfrc-system-response .vfrc-message:not([class*="extension"]) h2,
-.vfrc-system-response .vfrc-message:not([class*="extension"]) h2 * {
+.vfrc-system-response .vfrc-message h2,
+.vfrc-system-response .vfrc-message h2 * {
   font-family: var(--font-family) !important;
   font-weight: var(--font-semibold) !important;
   font-size: var(--heading-3) !important;
   line-height: 1.4 !important;
-  color: var(--text-primary) !important;
+  color: #F8FAFC !important;
   margin: 14px 0 8px 0 !important;
+  background: transparent !important;
 }
 
 /* H3 - Sous-titre secondaire */
-.vfrc-system-response .vfrc-message:not([class*="extension"]) h3,
-.vfrc-system-response .vfrc-message:not([class*="extension"]) h3 * {
+.vfrc-system-response .vfrc-message h3,
+.vfrc-system-response .vfrc-message h3 * {
   font-family: var(--font-family) !important;
   font-weight: var(--font-semibold) !important;
   font-size: var(--heading-4) !important;
   line-height: 1.4 !important;
-  color: var(--text-secondary) !important;
+  color: #CBD5E1 !important;
   margin: 12px 0 6px 0 !important;
+  background: transparent !important;
 }
 
 /* Listes */
-.vfrc-system-response .vfrc-message:not([class*="extension"]) ul,
-.vfrc-system-response .vfrc-message:not([class*="extension"]) ol {
+.vfrc-system-response .vfrc-message ul,
+.vfrc-system-response .vfrc-message ol {
   padding-left: 20px !important;
   margin: 8px 0 !important;
+  background: transparent !important;
 }
 
-.vfrc-system-response .vfrc-message:not([class*="extension"]) li {
+.vfrc-system-response .vfrc-message li {
   margin: 4px 0 !important;
+  background: transparent !important;
 }
 
 /* Code inline */
-.vfrc-system-response .vfrc-message:not([class*="extension"]) code {
-  background: rgba(255, 0, 102, 0.15) !important;
-  color: var(--pistache-pink-light) !important;
+.vfrc-system-response .vfrc-message code {
+  background: rgba(255, 0, 102, 0.2) !important;
+  color: #FF3385 !important;
   padding: 2px 6px !important;
   border-radius: 4px !important;
   font-size: 0.9em !important;
 }
 
 /* Blocs de code */
-.vfrc-system-response .vfrc-message:not([class*="extension"]) pre {
-  background: var(--dark-bg-primary) !important;
-  border: 1px solid var(--border-subtle) !important;
+.vfrc-system-response .vfrc-message pre {
+  background: #0D0D14 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
   border-radius: 8px !important;
   padding: 12px !important;
   overflow-x: auto !important;
 }
 
 /* ==========================================================
-   👤 Bulles utilisateur — Rose avec glow
+   👤 BULLES UTILISATEUR — ROSE OPAQUE
    ========================================================== */
 .vfrc-user-response > div,
 .vfrc-user-response .vfrc-message {
@@ -275,15 +275,14 @@ button.vfrc-header--button,
   line-height: 1.6 !important;
   
   display: inline-block !important;
-  background: linear-gradient(135deg, var(--pistache-pink), var(--pistache-pink-dark)) !important;
-  color: var(--text-on-pink) !important;
+  background: linear-gradient(135deg, #FF0066, #CC0052) !important;
+  background-color: #FF0066 !important;
+  color: #FFFFFF !important;
   border-radius: 16px 16px 4px 16px !important;
   padding: 14px 18px !important;
   max-width: 85% !important;
   
-  box-shadow: 
-    0 4px 15px var(--pistache-pink-glow),
-    0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 4px 15px rgba(255, 0, 102, 0.4) !important;
   
   white-space: pre-wrap !important;
   word-break: break-word !important;
@@ -291,8 +290,9 @@ button.vfrc-header--button,
 
 .vfrc-user-response > div *,
 .vfrc-user-response .vfrc-message * {
-  color: var(--text-on-pink) !important;
+  color: #FFFFFF !important;
   font-size: var(--body-1) !important;
+  background: transparent !important;
 }
 
 /* Marge des messages */
@@ -301,7 +301,7 @@ button.vfrc-header--button,
 }
 
 /* ==========================================================
-   🔘 Boutons de réponse — Style néon
+   🔘 BOUTONS DE RÉPONSE — FOND OPAQUE
    ========================================================== */
 .vfrc-button:not(.vfrc-header--button),
 button.vfrc-button:not(.vfrc-header--button) {
@@ -312,23 +312,20 @@ button.vfrc-button:not(.vfrc-header--button) {
   line-height: 1.4 !important;
   letter-spacing: 0.02em !important;
   
-  /* Style par défaut : bordure rose, fond transparent */
-  background: transparent !important;
-  color: var(--pistache-pink-light) !important;
-  border: 2px solid var(--pistache-pink) !important;
+  /* ✅ FOND OPAQUE SOMBRE */
+  background: #1A1A28 !important;
+  background-color: #1A1A28 !important;
+  color: #FF3385 !important;
+  border: 2px solid #FF0066 !important;
   border-radius: 10px !important;
   padding: 12px 20px !important;
   
-  /* Effet glow subtil */
-  box-shadow: 
-    0 0 10px rgba(255, 0, 102, 0.2),
-    inset 0 0 20px rgba(255, 0, 102, 0.05) !important;
+  /* Ombre */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
   
   /* Animation */
   transition: var(--transition-smooth) !important;
   cursor: pointer !important;
-  position: relative !important;
-  overflow: hidden !important;
   
   /* Layout */
   margin: 6px 0 !important;
@@ -341,41 +338,21 @@ button.vfrc-button:not(.vfrc-header--button) {
   gap: 8px !important;
 }
 
-/* Effet de brillance au hover */
-.vfrc-button:not(.vfrc-header--button)::before {
-  content: "" !important;
-  position: absolute !important;
-  top: 0 !important;
-  left: -100% !important;
-  width: 100% !important;
-  height: 100% !important;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  ) !important;
-  transition: var(--transition-smooth) !important;
-}
-
-/* Hover — Fond rempli */
+/* Hover — Fond rose */
 .vfrc-button:not(.vfrc-header--button):hover,
 button.vfrc-button:not(.vfrc-header--button):hover {
-  background: linear-gradient(135deg, var(--pistache-pink), var(--pistache-pink-dark)) !important;
-  color: var(--text-on-pink) !important;
-  box-shadow: var(--shadow-glow-strong) !important;
+  background: linear-gradient(135deg, #FF0066, #CC0052) !important;
+  background-color: #FF0066 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 6px 20px rgba(255, 0, 102, 0.5) !important;
   transform: translateY(-2px) !important;
-}
-
-.vfrc-button:not(.vfrc-header--button):hover::before {
-  left: 100% !important;
 }
 
 /* Active (clic) */
 .vfrc-button:not(.vfrc-header--button):active,
 button.vfrc-button:not(.vfrc-header--button):active {
   transform: translateY(0px) !important;
-  box-shadow: 0 0 15px var(--pistache-pink-glow) !important;
+  box-shadow: 0 2px 10px rgba(255, 0, 102, 0.4) !important;
 }
 
 /* Conteneur des boutons */
@@ -385,15 +362,19 @@ button.vfrc-button:not(.vfrc-header--button):active {
   flex-direction: column !important;
   gap: 10px !important;
   padding: 10px 0 !important;
+  background: transparent !important;
 }
 
 /* ==========================================================
-   ⌨️ Zone de saisie — Style sombre élégant
+   ⌨️ ZONE DE SAISIE — FOND OPAQUE
    ========================================================== */
 .vfrc-footer,
-.vfrc-chat-input {
-  background: var(--dark-bg-tertiary) !important;
-  border-top: 1px solid var(--border-subtle) !important;
+.vfrc-chat-input,
+div.vfrc-footer,
+div.vfrc-chat-input {
+  background: #1A1A28 !important;
+  background-color: #1A1A28 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
   padding: 12px 16px !important;
 }
 
@@ -404,9 +385,10 @@ button.vfrc-button:not(.vfrc-header--button):active {
   font-size: var(--body-1) !important;
   line-height: 1.5 !important;
   
-  background: var(--dark-bg-elevated) !important;
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border-subtle) !important;
+  background: #222233 !important;
+  background-color: #222233 !important;
+  color: #F8FAFC !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
   border-radius: 12px !important;
   padding: 12px 16px !important;
   
@@ -416,13 +398,13 @@ button.vfrc-button:not(.vfrc-header--button):active {
 .vfrc-chat-input textarea:focus,
 .vfrc-chat-input input:focus {
   outline: none !important;
-  border-color: var(--pistache-pink) !important;
-  box-shadow: 0 0 0 3px rgba(255, 0, 102, 0.15) !important;
+  border-color: #FF0066 !important;
+  box-shadow: 0 0 0 3px rgba(255, 0, 102, 0.2) !important;
 }
 
 .vfrc-chat-input textarea::placeholder,
 .vfrc-chat-input input::placeholder {
-  color: var(--text-muted) !important;
+  color: #64748B !important;
 }
 
 /* ==========================================================
@@ -434,7 +416,7 @@ button.vfrc-button:not(.vfrc-header--button):active {
   display: none !important;
 }
 
-/* Ajoute le texte "Envoyer" */
+/* Ajoute le texte flèche */
 #vfrc-send-message::after,
 .vfrc-chat-input__send::after {
   content: "→";
@@ -449,7 +431,7 @@ button.vfrc-button:not(.vfrc-header--button):active {
   border: none !important;
   border-radius: 10px !important;
   padding: 10px 16px !important;
-  color: var(--text-muted) !important;
+  color: #64748B !important;
   transition: var(--transition-smooth) !important;
   cursor: not-allowed !important;
   display: flex !important;
@@ -461,26 +443,26 @@ button.vfrc-button:not(.vfrc-header--button):active {
 /* État actif */
 #vfrc-send-message:not([disabled]),
 .vfrc-chat-input__send:not([disabled]) {
-  color: var(--pistache-pink) !important;
+  color: #FF0066 !important;
   cursor: pointer !important;
-  text-shadow: 0 0 10px var(--pistache-pink-glow) !important;
+  text-shadow: 0 0 10px rgba(255, 0, 102, 0.4) !important;
 }
 
 #vfrc-send-message:not([disabled]):hover,
 .vfrc-chat-input__send:not([disabled]):hover {
-  background: rgba(255, 0, 102, 0.1) !important;
-  color: var(--pistache-pink-light) !important;
+  background: rgba(255, 0, 102, 0.15) !important;
+  color: #FF3385 !important;
   transform: scale(1.1) !important;
 }
 
 /* ==========================================================
-   📜 Scrollbar personnalisée — Rose
+   📜 SCROLLBAR — ROSE OPAQUE
    ========================================================== */
 .vfrc-chat--dialog,
 .vfrc-chat-dialog,
 .vfrc-chat-dialog__container {
   scrollbar-width: thin !important;
-  scrollbar-color: var(--pistache-pink) transparent !important;
+  scrollbar-color: #FF0066 #1A1A28 !important;
 }
 
 .vfrc-chat--dialog::-webkit-scrollbar,
@@ -492,26 +474,27 @@ button.vfrc-button:not(.vfrc-header--button):active {
 .vfrc-chat--dialog::-webkit-scrollbar-thumb,
 .vfrc-chat-dialog::-webkit-scrollbar-thumb,
 .vfrc-chat-dialog__container::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--pistache-pink), var(--pistache-pink-dark)) !important;
+  background: linear-gradient(180deg, #FF0066, #CC0052) !important;
   border-radius: 999px !important;
 }
 
 .vfrc-chat--dialog::-webkit-scrollbar-track,
 .vfrc-chat-dialog::-webkit-scrollbar-track,
 .vfrc-chat-dialog__container::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05) !important;
+  background: #1A1A28 !important;
   border-radius: 999px !important;
 }
 
 /* ==========================================================
-   🖼️ Cards et Images
+   🖼️ Cards et Images — FOND OPAQUE
    ========================================================== */
 .vfrc-card {
-  background: var(--dark-bg-elevated) !important;
-  border: 1px solid var(--border-subtle) !important;
+  background: #222233 !important;
+  background-color: #222233 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
   border-radius: 12px !important;
   overflow: hidden !important;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
 }
 
 .vfrc-card img {
@@ -521,25 +504,26 @@ button.vfrc-button:not(.vfrc-header--button):active {
 .vfrc-card--title {
   font-family: var(--font-family) !important;
   font-weight: var(--font-semibold) !important;
-  color: var(--text-primary) !important;
+  color: #F8FAFC !important;
 }
 
 .vfrc-card--description {
   font-family: var(--font-family) !important;
-  color: var(--text-secondary) !important;
+  color: #CBD5E1 !important;
 }
 
 /* ==========================================================
    ⏳ Indicateur de frappe
    ========================================================== */
 .vfrc-typing-indicator {
-  background: var(--dark-bg-elevated) !important;
+  background: #2A2A3D !important;
+  background-color: #2A2A3D !important;
   border-radius: 16px !important;
   padding: 12px 16px !important;
 }
 
 .vfrc-typing-indicator span {
-  background: var(--pistache-pink) !important;
+  background: #FF0066 !important;
   animation: typing-pulse 1.4s infinite ease-in-out !important;
 }
 
@@ -566,19 +550,41 @@ button.vfrc-button:not(.vfrc-header--button):active {
 }
 
 /* ==========================================================
-   🧹 Nettoyage des ombres parasites
+   🎭 ASSISTANT INFO (Avatar zone) — FOND OPAQUE
    ========================================================== */
-.vfrc-chat--overlay,
-.vfrc-footer__content,
-.vfrc-input-container {
-  box-shadow: none !important;
-  background: transparent !important;
+.vfrc-assistant-info,
+.vfrc-assistant-info__container,
+div.vfrc-assistant-info {
+  background: #13131D !important;
+  background-color: #13131D !important;
 }
 
-/* Classes dynamiques */
-[class^="_"],
-[class*=" _"] {
+.vfrc-assistant-info__name {
+  color: #F8FAFC !important;
+  font-family: var(--font-family) !important;
+  font-weight: var(--font-bold) !important;
+}
+
+.vfrc-assistant-info__description {
+  color: #CBD5E1 !important;
+  font-family: var(--font-family) !important;
+}
+
+/* ==========================================================
+   🧹 OVERRIDE GLOBAL — Pas de transparence
+   ========================================================== */
+/* Supprime les overlays transparents */
+.vfrc-chat--overlay {
+  background: #13131D !important;
+  background-color: #13131D !important;
   box-shadow: none !important;
+}
+
+/* Footer content */
+.vfrc-footer__content,
+.vfrc-input-container {
+  background: #1A1A28 !important;
+  background-color: #1A1A28 !important;
 }
 
 /* ==========================================================
@@ -604,7 +610,7 @@ button.vfrc-button:not(.vfrc-header--button):active {
 }
 
 /* ==========================================================
-   ✨ Animations d'entrée (optionnel)
+   ✨ Animations d'entrée
    ========================================================== */
 @keyframes fadeInUp {
   from {
@@ -619,21 +625,4 @@ button.vfrc-button:not(.vfrc-header--button):active {
 
 .vfrc-message {
   animation: fadeInUp 0.3s ease-out !important;
-}
-
-/* ==========================================================
-   🌟 Effet de particules sur le fond (optionnel)
-   ========================================================== */
-.vfrc-chat-dialog__container::before {
-  content: "" !important;
-  position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(255, 0, 102, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(107, 33, 168, 0.05) 0%, transparent 50%) !important;
-  pointer-events: none !important;
-  z-index: 0 !important;
 }
