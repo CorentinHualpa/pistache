@@ -1,9 +1,10 @@
 /* ==========================================================
-   🐢 Pistache × Voiceflow — Dark Mode v9.0
+   🐢 Pistache × Voiceflow — Dark Mode v10.0 COMPACT
    
-   ✅ FIX: Bandes blanches (footer__links, input-container)
-   ✅ FIX: Bande noire (bottom-spacer)
-   ✅ FIX: Texte textarea blanc (.vfrc-chat-input)
+   ✅ Bulles plus compactes
+   ✅ Marges réduites
+   ✅ Zone input plus petite
+   ✅ Moins d'espace entre boutons et messages
    ========================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
@@ -36,7 +37,7 @@
 }
 
 /* ==========================================================
-   1. HEADER ROSE
+   1. HEADER ROSE - COMPACT
    ========================================================== */
 .vfrc-header,
 .vfrc-header--container-inner,
@@ -45,14 +46,14 @@ div.vfrc-header--container-inner {
   background: #FF0066 !important;
   background-color: #FF0066 !important;
   box-shadow: 0 4px 20px rgba(255, 0, 102, 0.4) !important;
-  padding: 16px 20px !important;
+  padding: 12px 16px !important; /* Réduit */
 }
 
 .vfrc-header--title,
 div.vfrc-header--title {
   font-family: 'Plus Jakarta Sans', sans-serif !important;
   font-weight: 700 !important;
-  font-size: 20px !important;
+  font-size: 18px !important; /* Réduit */
   color: #FFFFFF !important;
   background: transparent !important;
 }
@@ -65,7 +66,7 @@ button.vfrc-header--button,
 }
 
 /* ==========================================================
-   2. FOND SOMBRE OPAQUE - TOUS LES CONTENEURS
+   2. FOND SOMBRE OPAQUE
    ========================================================== */
 .vfrc-chat,
 .vfrc-chat-dialog,
@@ -80,35 +81,39 @@ button.vfrc-header--button,
 .vfrc-assistant-info {
   background: #0F0F1A !important;
   background-color: #0F0F1A !important;
+  padding: 12px !important; /* Réduit */
 }
 
 .vfrc-assistant-info__name {
   color: #E2E8F0 !important;
+  font-size: 14px !important;
 }
 
 .vfrc-assistant-info__description {
   color: #94A3B8 !important;
+  font-size: 12px !important;
 }
 
 /* ==========================================================
-   3. BULLES SYSTÈME (Bot)
+   3. BULLES SYSTÈME (Bot) - COMPACT
    ========================================================== */
 .vfrc-system-response .vfrc-message:not([class*="extension"]) {
   display: inline-block !important;
   background: rgba(37, 37, 64, 0.95) !important;
   color: #E5E5E5 !important;
   border: 1px solid rgba(139, 92, 246, 0.4) !important;
-  border-radius: 16px 16px 16px 4px !important;
-  padding: 14px 18px !important;
+  border-radius: 12px 12px 12px 4px !important; /* Réduit */
+  padding: 10px 14px !important; /* Réduit */
   max-width: 85%;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important; /* Réduit */
   font-family: 'Plus Jakarta Sans', sans-serif !important;
-  font-size: 14px !important;
-  line-height: 1.6 !important;
+  font-size: 13px !important; /* Réduit */
+  line-height: 1.5 !important;
 }
 
 .vfrc-system-response .vfrc-message:not([class*="extension"]) * {
   color: #E5E5E5 !important;
+  font-size: 13px !important;
 }
 
 .vfrc-system-response .vfrc-message:not([class*="extension"]) strong,
@@ -118,107 +123,110 @@ button.vfrc-header--button,
 }
 
 /* ==========================================================
-   4. BULLES UTILISATEUR
+   4. BULLES UTILISATEUR - COMPACT
    ========================================================== */
 .vfrc-user-response > div,
 .vfrc-user-response .vfrc-message {
   display: inline-block !important;
   background: linear-gradient(135deg, #FF0066 0%, #CC0052 100%) !important;
   color: #FFFFFF !important;
-  border-radius: 16px 16px 4px 16px !important;
-  padding: 12px 16px !important;
+  border-radius: 12px 12px 4px 12px !important; /* Réduit */
+  padding: 10px 14px !important; /* Réduit */
   max-width: 85%;
-  box-shadow: 0 4px 12px rgba(255, 0, 102, 0.4) !important;
+  box-shadow: 0 2px 8px rgba(255, 0, 102, 0.3) !important; /* Réduit */
   font-family: 'Plus Jakarta Sans', sans-serif !important;
-  font-size: 14px !important;
+  font-size: 13px !important; /* Réduit */
 }
 
 .vfrc-user-response > div *,
 .vfrc-user-response .vfrc-message * {
   color: #FFFFFF !important;
+  font-size: 13px !important;
 }
 
+/* Marge des messages - RÉDUITE */
 .vfrc-message:not([class*="extension"]) { 
-  margin: 12px 0 !important; 
+  margin: 6px 0 !important; /* Réduit de 12px à 6px */
 }
 
 /* ==========================================================
-   5. BOUTONS
+   5. BOUTONS - COMPACT
    ========================================================== */
 .vfrc-button:not(.vfrc-header--button),
 button.vfrc-button:not(.vfrc-header--button) {
   background: rgba(30, 30, 50, 0.8) !important;
   color: #FF4D94 !important;
-  border: 2px solid rgba(255, 0, 102, 0.5) !important;
-  border-radius: 12px !important;
-  padding: 12px 20px !important;
+  border: 1.5px solid rgba(255, 0, 102, 0.5) !important; /* Réduit */
+  border-radius: 8px !important; /* Réduit */
+  padding: 8px 14px !important; /* Réduit */
   font-family: 'Plus Jakarta Sans', sans-serif !important;
   font-weight: 600 !important;
-  font-size: 13px !important;
+  font-size: 12px !important; /* Réduit */
   cursor: pointer !important;
   transition: all 0.3s ease !important;
-  margin: 6px 4px !important;
+  margin: 3px 3px !important; /* Réduit */
 }
 
 .vfrc-button:not(.vfrc-header--button):hover {
   background: linear-gradient(135deg, #FF0066, #CC0052) !important;
   color: #FFFFFF !important;
-  transform: translateY(-2px) !important;
+  transform: translateY(-1px) !important;
 }
 
-.vfrc-button-container {
+/* Conteneur boutons - COMPACT */
+.vfrc-button-container,
+.vfrc-system-response--actions {
   display: flex !important;
   flex-wrap: wrap !important;
-  gap: 8px !important;
-  padding: 8px 0 !important;
+  gap: 4px !important; /* Réduit */
+  padding: 4px 0 !important; /* Réduit */
+  margin-top: 2px !important; /* Réduit */
 }
 
 /* ==========================================================
-   6. TYPING INDICATOR
+   6. TYPING INDICATOR - COMPACT
    ========================================================== */
 .vfrc-typing-indicator {
   background: rgba(37, 37, 64, 0.95) !important;
   border: 1px solid rgba(139, 92, 246, 0.4) !important;
-  border-radius: 16px !important;
-  padding: 12px 16px !important;
+  border-radius: 10px !important;
+  padding: 8px 12px !important; /* Réduit */
 }
 
 .vfrc-typing-indicator span {
   background: #FF0066 !important;
+  width: 6px !important;
+  height: 6px !important;
 }
 
 /* ==========================================================
-   7. FOOTER & INPUT - FIX BANDES BLANCHES
+   7. FOOTER & INPUT - COMPACT
    ========================================================== */
 .vfrc-footer,
 .vfrc-footer__content,
 div.vfrc-footer {
   background: #161625 !important;
   background-color: #161625 !important;
-  border-top: 2px solid rgba(255, 0, 102, 0.3) !important;
-  padding: 16px 12px !important;
+  border-top: 1px solid rgba(255, 0, 102, 0.3) !important; /* Réduit */
+  padding: 10px 10px !important; /* Réduit */
 }
 
-/* ✅ FIX: Bande blanche footer__links */
 .vfrc-footer__links,
 div.vfrc-footer__links,
 [class*="footer__links"] {
-  background: #161625 !important;
-  background-color: #161625 !important;
   display: none !important;
 }
 
-/* ✅ FIX: Input container */
 .vfrc-input-container,
 div.vfrc-input-container,
 [class*="input-container"] {
   background: #1E1E32 !important;
   background-color: #1E1E32 !important;
-  border: 2px solid rgba(255, 0, 102, 0.4) !important;
-  border-radius: 12px !important;
+  border: 1.5px solid rgba(255, 0, 102, 0.4) !important; /* Réduit */
+  border-radius: 10px !important; /* Réduit */
+  padding: 4px !important; /* Ajout padding interne */
 }
 
-/* ✅ FIX: Focus ring */
 .vfrc-chat-focus-ring,
 div.vfrc-chat-focus-ring,
 [class*="focus-ring"] {
@@ -226,7 +234,6 @@ div.vfrc-chat-focus-ring,
   background-color: transparent !important;
 }
 
-/* ✅ FIX: Container inner */
 .vfrc-chat-input__container-inner,
 [class*="container-inner"] {
   background: transparent !important;
@@ -234,9 +241,8 @@ div.vfrc-chat-focus-ring,
 }
 
 /* ==========================================================
-   8. TEXTAREA - TEXTE BLANC VISIBLE
+   8. TEXTAREA - COMPACT
    ========================================================== */
-/* La vraie classe du textarea est .vfrc-chat-input (pas __input) */
 .vfrc-chat-input,
 textarea.vfrc-chat-input,
 .vfrc-chat-input._1gdvh9ta,
@@ -247,19 +253,20 @@ textarea._1gdvh9ta,
   color: #FFFFFF !important;
   border: none !important;
   font-family: 'Plus Jakarta Sans', sans-serif !important;
-  font-size: 14px !important;
-  padding: 12px 16px !important;
+  font-size: 13px !important; /* Réduit */
+  padding: 8px 12px !important; /* Réduit */
   caret-color: #FF0066 !important;
+  min-height: 20px !important; /* Hauteur minimale */
+  max-height: 100px !important; /* Hauteur maximale */
 }
 
-/* Placeholder */
 .vfrc-chat-input::placeholder,
 textarea.vfrc-chat-input::placeholder,
 textarea._1gdvh9ta::placeholder {
   color: #64748B !important;
+  font-size: 13px !important;
 }
 
-/* Focus state */
 .vfrc-chat-input:focus,
 textarea.vfrc-chat-input:focus,
 textarea._1gdvh9ta:focus {
@@ -269,7 +276,7 @@ textarea._1gdvh9ta:focus {
 }
 
 /* ==========================================================
-   9. BOUTON ENVOYER
+   9. BOUTON ENVOYER - COMPACT
    ========================================================== */
 .vfrc-chat-input__send,
 #vfrc-send-message,
@@ -277,24 +284,27 @@ textarea._1gdvh9ta:focus {
   background: rgba(100, 100, 120, 0.3) !important;
   border: none !important;
   border-radius: 50% !important;
-  width: 40px !important;
-  height: 40px !important;
+  width: 32px !important; /* Réduit */
+  height: 32px !important; /* Réduit */
   cursor: pointer !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
+  margin: 4px !important;
 }
 
 .vfrc-chat-input__send:not([disabled]),
 #vfrc-send-message:not([disabled]) {
   background: linear-gradient(135deg, #FF0066, #CC0052) !important;
-  box-shadow: 0 4px 12px rgba(255, 0, 102, 0.5) !important;
+  box-shadow: 0 2px 8px rgba(255, 0, 102, 0.4) !important;
 }
 
 .vfrc-chat-input__send svg,
 #vfrc-send-message svg {
   color: #FFFFFF !important;
   fill: currentColor !important;
+  width: 16px !important; /* Réduit */
+  height: 16px !important; /* Réduit */
 }
 
 .vfrc-chat-input__actions,
@@ -324,7 +334,7 @@ textarea._1gdvh9ta:focus {
 
 .vfrc-chat--dialog::-webkit-scrollbar,
 .vfrc-chat-dialog::-webkit-scrollbar {
-  width: 10px;
+  width: 8px; /* Réduit */
 }
 
 .vfrc-chat--dialog::-webkit-scrollbar-thumb,
@@ -339,16 +349,23 @@ textarea._1gdvh9ta:focus {
 }
 
 /* ==========================================================
-   12. CARDS
+   12. CARDS - COMPACT
    ========================================================== */
 .vfrc-card {
   background: rgba(37, 37, 64, 0.95) !important;
   border: 1px solid rgba(139, 92, 246, 0.3) !important;
-  border-radius: 12px !important;
+  border-radius: 10px !important;
+  padding: 10px !important;
 }
 
-.vfrc-card--title { color: #FFFFFF !important; }
-.vfrc-card--description { color: #94A3B8 !important; }
+.vfrc-card--title { 
+  color: #FFFFFF !important; 
+  font-size: 14px !important;
+}
+.vfrc-card--description { 
+  color: #94A3B8 !important; 
+  font-size: 12px !important;
+}
 
 /* ==========================================================
    13. EXTENSIONS
@@ -372,12 +389,12 @@ textarea._1gdvh9ta:focus {
    15. ANIMATIONS
    ========================================================== */
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .vfrc-message {
-  animation: fadeInUp 0.4s ease-out;
+  animation: fadeInUp 0.3s ease-out;
 }
 
 /* ==========================================================
@@ -388,11 +405,12 @@ textarea._1gdvh9ta:focus {
   .vfrc-user-response > div,
   .vfrc-user-response .vfrc-message {
     max-width: 92% !important;
-    padding: 12px 14px !important;
+    padding: 8px 12px !important;
   }
   
   .vfrc-button:not(.vfrc-header--button) {
     width: 100% !important;
-    margin: 4px 0 !important;
+    margin: 2px 0 !important;
+    padding: 8px 12px !important;
   }
 }
