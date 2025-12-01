@@ -1,46 +1,51 @@
 /* ==========================================================
-   🐢 Pistache × Voiceflow — Dark Mode v14.0
+   🐢 Pistache × Voiceflow — Dark Mode v15.0
    
-   ✅ Fond noir ultra-profond (#08080F) + dégradé violet subtil
-   ✅ Logo header centré verticalement
-   ✅ Toutes les fonctionnalités v13 conservées
+   ✅ FIX: Scroll automatique vers le bas (structure flex)
+   ✅ Fond noir ultra-profond + dégradé
+   ✅ Logo header centré
    ========================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
 /* ==========================================================
-   0. STRUCTURE DU CHAT
+   0. STRUCTURE DU CHAT - FLEX POUR SCROLL AUTO
    ========================================================== */
 #voiceflow-chat-container {
   display: flex !important;
   flex-direction: column !important;
   height: 100% !important;
   min-height: 100% !important;
+  position: relative !important;
 }
 
 .vfrc-widget,
-.vfrc-chat,
-.vfrc-chat-dialog {
+.vfrc-chat {
   display: flex !important;
   flex-direction: column !important;
   height: 100% !important;
   flex: 1 !important;
+  min-height: 0 !important; /* ✅ Important pour flex scroll */
 }
 
+.vfrc-chat-dialog,
 .vfrc-chat-dialog__container {
   display: flex !important;
   flex-direction: column !important;
-  height: 100% !important;
   flex: 1 !important;
+  min-height: 0 !important; /* ✅ Important pour flex scroll */
+  overflow: hidden !important;
 }
 
-/* ✅ Zone de dialogue avec padding-bottom */
+/* ✅ Zone de dialogue - SCROLL AUTO */
 .vfrc-chat--dialog {
   display: flex !important;
   flex-direction: column !important;
   flex: 1 !important;
-  padding-bottom: 70px !important;
+  min-height: 0 !important;
   overflow-y: auto !important;
+  overflow-x: hidden !important;
+  scroll-behavior: smooth !important;
 }
 
 /* ==========================================================
@@ -53,19 +58,19 @@ div.vfrc-header {
   box-shadow: 0 4px 20px rgba(255, 0, 102, 0.4) !important;
   padding: 12px 16px !important;
   display: flex !important;
-  align-items: center !important; /* ✅ CENTRAGE VERTICAL */
+  align-items: center !important;
   gap: 12px !important;
+  flex-shrink: 0 !important; /* ✅ Ne pas rétrécir */
 }
 
 .vfrc-header--container-inner,
 div.vfrc-header--container-inner {
   background: transparent !important;
   display: flex !important;
-  align-items: center !important; /* ✅ CENTRAGE VERTICAL */
+  align-items: center !important;
   flex: 1 !important;
 }
 
-/* Avatar/Logo dans le header */
 .vfrc-header .vfrc-avatar,
 .vfrc-header img.vfrc-avatar {
   width: 36px !important;
@@ -235,18 +240,14 @@ button.vfrc-button:not(.vfrc-header--button):not(#vfrc-start-chat) {
 }
 
 /* ==========================================================
-   7. FOOTER - POSITION FIXE EN BAS
+   7. FOOTER - STRUCTURE FLEX (pas absolute)
    ========================================================== */
 .vfrc-footer,
 div.vfrc-footer {
   background: rgba(12, 12, 20, 0.95) !important;
   border-top: 1px solid rgba(255, 0, 102, 0.25) !important;
   padding: 8px !important;
-  position: absolute !important;
-  bottom: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  z-index: 100 !important;
+  flex-shrink: 0 !important; /* ✅ Ne pas rétrécir */
   backdrop-filter: blur(10px) !important;
 }
 
@@ -392,7 +393,7 @@ textarea.vfrc-chat-input:focus {
 }
 
 /* ==========================================================
-   11. FIX SPACERS ET ÉLÉMENTS PARASITES
+   11. FIX SPACERS
    ========================================================== */
 .vfrc-chat--bottom-spacer,
 [class*="bottom-spacer"] {
