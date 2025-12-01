@@ -1,29 +1,28 @@
 /* ==========================================================
-   🐢 Pistache × Voiceflow — Dark Mode v4.0
+   🐢 Pistache × Voiceflow — Dark Mode v5.0
    
-   ✅ FIX: Header dégradé propre
-   ✅ FIX: Texte input visible (blanc)
+   ✅ FIX: Header - conteneur intérieur transparent
+   ✅ FIX: Textarea - texte visible même au focus
+   ✅ FIX: Scrollbar visible
    ========================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
 /* ==========================================================
-   🔒 RESET GLOBAL — Forcer fond sombre PARTOUT
+   🔒 RESET GLOBAL
    ========================================================== */
 [class*="vfrc-"],
 [class^="vfrc-"],
-[id*="voiceflow"],
 #voiceflow-chat-container,
 #voiceflow-chat-container * {
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
 /* ==========================================================
-   🎯 WIDGET PRINCIPAL — FOND OPAQUE ABSOLU
+   🎯 WIDGET PRINCIPAL — FOND OPAQUE
    ========================================================== */
 #voiceflow-chat-container,
 .vfrc-widget,
-.vfrc-widget *:not(svg):not(path):not(img):not(button):not(input):not(textarea),
 [class*="vfrc-chat"],
 [class*="vfrc-widget"] {
   background-color: #0F0F1A !important;
@@ -41,34 +40,61 @@ div[class*="vfrc-chat"] {
 }
 
 /* ==========================================================
-   🔝 HEADER ROSE — FIX DÉGRADÉ
+   🔝 HEADER ROSE — FIX COMPLET
    ========================================================== */
+/* Header principal */
 .vfrc-header,
-[class*="vfrc-header"],
 div.vfrc-header,
-.vfrc-header--container-inner,
-[class*="header--container"] {
+[class*="vfrc-header"]:not([class*="button"]):not([class*="icon"]):not([class*="title"]):not([class*="actions"]) {
   background: #FF0066 !important;
   background-color: #FF0066 !important;
   padding: 16px 20px !important;
   border-bottom: none !important;
   box-shadow: 0 4px 20px rgba(255, 0, 102, 0.4) !important;
-  width: 100% !important;
-  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
 }
 
+/* ✅ FIX: Conteneur intérieur du header = TRANSPARENT */
+.vfrc-header--container-inner,
+[class*="header--container"],
+.vfrc-header > div:not(.vfrc-avatar):not(.vfrc-header--actions),
+.jyiuei5 {
+  background: transparent !important;
+  background-color: transparent !important;
+  flex: 1 !important;
+}
+
+/* Titre du header */
 .vfrc-header--title,
-[class*="header--title"] {
+[class*="header--title"],
+.fptyqm0,
+.fptyqm1 {
   color: #FFFFFF !important;
   font-weight: 700 !important;
   font-size: 18px !important;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 /* Cacher bouton reset */
 .vfrc-header--button,
-[class*="header--button"] {
+.vfrc-header--actions,
+[class*="header--button"],
+[class*="header--actions"] {
   display: none !important;
+  visibility: hidden !important;
+}
+
+/* Avatar dans le header */
+.vfrc-header .vfrc-avatar,
+.vfrc-header img {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  flex-shrink: 0 !important;
 }
 
 /* ==========================================================
@@ -86,11 +112,10 @@ div[class*="dialog"] {
 }
 
 /* ==========================================================
-   🎭 ZONE ASSISTANT INFO — FOND OPAQUE
+   🎭 ZONE ASSISTANT INFO
    ========================================================== */
 .vfrc-assistant-info,
-[class*="assistant-info"],
-[class*="assistant"] {
+[class*="assistant-info"] {
   background: #0F0F1A !important;
   background-color: #0F0F1A !important;
 }
@@ -230,7 +255,6 @@ button.vfrc-button:not(.vfrc-header--button),
 .vfrc-typing-indicator span,
 .vfrc-typing-indicator div,
 [class*="typing-indicator"] span,
-[class*="typing-indicator"] div,
 [class*="typing"] span {
   width: 8px !important;
   height: 8px !important;
@@ -240,10 +264,8 @@ button.vfrc-button:not(.vfrc-header--button),
   animation: pulse 1.4s infinite ease-in-out !important;
 }
 
-.vfrc-typing-indicator span:nth-child(2),
-[class*="typing"] span:nth-child(2) { animation-delay: 0.2s !important; }
-.vfrc-typing-indicator span:nth-child(3),
-[class*="typing"] span:nth-child(3) { animation-delay: 0.4s !important; }
+.vfrc-typing-indicator span:nth-child(2) { animation-delay: 0.2s !important; }
+.vfrc-typing-indicator span:nth-child(3) { animation-delay: 0.4s !important; }
 
 @keyframes pulse {
   0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
@@ -251,12 +273,12 @@ button.vfrc-button:not(.vfrc-header--button),
 }
 
 /* ==========================================================
-   ⌨️ FOOTER / INPUT — FOND OPAQUE + TEXTE BLANC
+   ⌨️ FOOTER / INPUT — FIX TEXTE AU FOCUS
    ========================================================== */
 .vfrc-footer,
 .vfrc-chat-input,
 [class*="vfrc-footer"],
-[class*="chat-input"],
+[class*="chat-input"]:not(textarea),
 [class*="footer"] {
   background: #161625 !important;
   background-color: #161625 !important;
@@ -264,14 +286,15 @@ button.vfrc-button:not(.vfrc-header--button),
   padding: 14px 18px !important;
 }
 
-/* ✅ FIX TEXTAREA — Texte BLANC visible */
+/* ✅ FIX TEXTAREA — Texte BLANC même au FOCUS */
 .vfrc-chat-input textarea,
 .vfrc-chat-input input,
 [class*="chat-input"] textarea,
 [class*="chat-input"] input,
 textarea.vfrc-chat-input,
 textarea[class*="vfrc-chat-input"],
-textarea[class*="_"] {
+textarea[class*="_"],
+textarea {
   background: #1E1E32 !important;
   background-color: #1E1E32 !important;
   color: #FFFFFF !important;
@@ -281,28 +304,44 @@ textarea[class*="_"] {
   padding: 12px 16px !important;
   font-size: 14px !important;
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  -webkit-text-fill-color: #FFFFFF !important;
 }
 
-/* ✅ Force le texte blanc même sur les classes dynamiques */
-textarea,
-textarea[class] {
-  color: #FFFFFF !important;
-}
-
+/* ✅ FORCE LE TEXTE BLANC AU FOCUS */
 .vfrc-chat-input textarea:focus,
 .vfrc-chat-input input:focus,
 [class*="chat-input"] textarea:focus,
-[class*="chat-input"] input:focus {
+textarea:focus,
+textarea[class]:focus {
   outline: none !important;
   border-color: #FF0066 !important;
   box-shadow: 0 0 0 3px rgba(255, 0, 102, 0.2) !important;
   color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  background: #1E1E32 !important;
+  background-color: #1E1E32 !important;
+}
+
+/* ✅ Force sur toutes les classes dynamiques */
+textarea._1gdvh9ta,
+textarea[class*="_1gdvh9t"],
+textarea[class^="_"] {
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  background: #1E1E32 !important;
+}
+
+textarea._1gdvh9ta:focus,
+textarea[class*="_1gdvh9t"]:focus,
+textarea[class^="_"]:focus {
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
 }
 
 .vfrc-chat-input textarea::placeholder,
-.vfrc-chat-input input::placeholder,
 textarea::placeholder {
   color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
 }
 
 /* Bouton envoyer */
@@ -341,26 +380,53 @@ textarea::placeholder {
 }
 
 /* ==========================================================
-   📜 SCROLLBAR
+   📜 SCROLLBAR — VISIBLE ET STYLÉE
    ========================================================== */
-[class*="vfrc-"]::-webkit-scrollbar {
-  width: 8px !important;
+/* Scrollbar Firefox */
+.vfrc-chat--dialog,
+.vfrc-chat-dialog,
+.vfrc-chat-dialog__container {
+  scrollbar-width: thin !important;
+  scrollbar-color: #FF0066 #1A1A2E !important;
 }
 
-[class*="vfrc-"]::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #FF0066, #8B5CF6) !important;
+/* Scrollbar Webkit (Chrome, Safari, Edge) */
+.vfrc-chat--dialog::-webkit-scrollbar,
+.vfrc-chat-dialog::-webkit-scrollbar,
+.vfrc-chat-dialog__container::-webkit-scrollbar,
+[class*="dialog"]::-webkit-scrollbar {
+  width: 10px !important;
+  display: block !important;
+}
+
+.vfrc-chat--dialog::-webkit-scrollbar-track,
+.vfrc-chat-dialog::-webkit-scrollbar-track,
+.vfrc-chat-dialog__container::-webkit-scrollbar-track,
+[class*="dialog"]::-webkit-scrollbar-track {
+  background: #1A1A2E !important;
   border-radius: 10px !important;
 }
 
-[class*="vfrc-"]::-webkit-scrollbar-track {
-  background: #161625 !important;
+.vfrc-chat--dialog::-webkit-scrollbar-thumb,
+.vfrc-chat-dialog::-webkit-scrollbar-thumb,
+.vfrc-chat-dialog__container::-webkit-scrollbar-thumb,
+[class*="dialog"]::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #FF0066, #8B5CF6) !important;
+  border-radius: 10px !important;
+  border: 2px solid #1A1A2E !important;
+}
+
+.vfrc-chat--dialog::-webkit-scrollbar-thumb:hover,
+.vfrc-chat-dialog::-webkit-scrollbar-thumb:hover,
+[class*="dialog"]::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #FF4D94, #A78BFA) !important;
 }
 
 /* ==========================================================
    🛡️ OVERRIDE CLASSES DYNAMIQUES
    ========================================================== */
-[class^="_"],
-[class*=" _"] {
+[class^="_"]:not(textarea),
+[class*=" _"]:not(textarea) {
   background-color: inherit !important;
 }
 
