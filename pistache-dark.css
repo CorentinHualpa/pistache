@@ -1,65 +1,107 @@
 /* ==========================================================
-   🐢 Pistache × Voiceflow — Dark Mode v7.0
+   🐢 Pistache × Voiceflow — Dark Mode v8.0
    
-   ✅ Fonds OPAQUES (comme v3-v4)
-   ✅ Textarea SIMPLE (comme v6 qui fonctionne)
-   ✅ Scrollbar visible
+   Basé sur le thème EVO GENESIS (qui fonctionne)
+   Adapté aux couleurs Pistache (rose néon)
    ========================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
 /* ==========================================================
-   Variables
+   0. FORCER LE CHAT À REMPLIR TOUTE LA HAUTEUR
    ========================================================== */
-:root {
-  --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-regular: 400;
-  --font-medium: 500;
-  --font-semibold: 600;
-  --font-bold: 700;
-  
-  --heading-1: 16px;
-  --heading-2: 20px;
-  --heading-3: 14px;
-  --heading-4: 13px;
-  --body-1: 14px;
-  --body-2: 13px;
-  --button: 13px;
-  
-  --pink: #FF0066;
-  --pink-light: #FF4D94;
-  --pink-dark: #CC0052;
-  --bg-dark: #0F0F1A;
-  --bg-secondary: #161625;
-  --bg-bubble: #252540;
-  --bg-input: #1E1E32;
-  --text-white: #FFFFFF;
-  --text-muted: #94A3B8;
+#voiceflow-chat-container {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  overflow: visible !important;
+}
+
+.vfrc-widget,
+.vfrc-chat,
+.vfrc-chat-dialog,
+.vfrc-chat--dialog {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  flex: 1 !important;
+  overflow: visible !important;
+}
+
+.vfrc-chat-dialog__container {
+  position: static !important;
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  flex: 1 !important;
+  overflow: visible !important;
+  inset: auto !important;
+}
+
+.vfrc-chat-body,
+.vfrc-chat-dialog__content {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  padding-bottom: 0 !important;
 }
 
 /* ==========================================================
-   🎯 CONTENEURS PRINCIPAUX — FONDS OPAQUES
+   1. HEADER ROSE (pas masqué comme EVO)
+   ========================================================== */
+.vfrc-header,
+.vfrc-header--container-inner,
+div.vfrc-header,
+div.vfrc-header--container-inner {
+  background: #FF0066 !important;
+  background-color: #FF0066 !important;
+  box-shadow: 0 4px 20px rgba(255, 0, 102, 0.4) !important;
+  padding: 16px 20px !important;
+}
+
+/* Titre header */
+.vfrc-header--title,
+div.vfrc-header--title {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 20px !important;
+  color: #FFFFFF !important;
+  background: transparent !important;
+}
+
+/* Masquer bouton reset */
+.vfrc-header--button,
+button.vfrc-header--button,
+.vfrc-header--actions {
+  display: none !important;
+  height: 0 !important;
+  width: 0 !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* ==========================================================
+   2. FOND SOMBRE OPAQUE
    ========================================================== */
 .vfrc-chat,
-.vfrc-chat__container,
-.vfrc-chat__container-inner,
-div.vfrc-chat,
-div[class*="vfrc-chat"] {
-  background: #0F0F1A !important;
-  background-color: #0F0F1A !important;
-}
-
-.vfrc-chat--dialog,
 .vfrc-chat-dialog,
-.vfrc-chat-dialog__container,
-div.vfrc-chat--dialog,
-div.vfrc-chat-dialog {
+.vfrc-chat--dialog,
+.vfrc-widget {
   background: #0F0F1A !important;
   background-color: #0F0F1A !important;
 }
 
-.vfrc-assistant-info,
-div.vfrc-assistant-info {
+.vfrc-chat-dialog__content,
+.vfrc-chat-body {
+  background: #0F0F1A !important;
+  background-color: #0F0F1A !important;
+}
+
+.vfrc-assistant-info {
   background: #0F0F1A !important;
   background-color: #0F0F1A !important;
 }
@@ -72,119 +114,54 @@ div.vfrc-assistant-info {
   color: #94A3B8 !important;
 }
 
-.vfrc-chat--overlay {
-  background: #0F0F1A !important;
-  background-color: #0F0F1A !important;
-}
-
 /* ==========================================================
-   🔝 HEADER ROSE — FOND OPAQUE
+   3. BULLES DE CHAT - STYLE DARK COSMIQUE
    ========================================================== */
-.vfrc-header,
-.vfrc-header--container-inner,
-div.vfrc-header,
-div.vfrc-header--container-inner {
-  background: #FF0066 !important;
-  background-color: #FF0066 !important;
-  box-shadow: 0 4px 20px rgba(255, 0, 102, 0.4) !important;
-}
-
-/* Masquer le bouton reset */
-.vfrc-header--button,
-button.vfrc-header--button,
-.vfrc-header--actions {
-  display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-  width: 0 !important;
-  height: 0 !important;
-  overflow: hidden !important;
-}
-
-/* Titre header */
-div.vfrc-header--title,
-.fptyqm0.vfrc-header--title,
-.fptyqm1.vfrc-header--title,
-.vfrc-header--title {
-  font-family: var(--font-family) !important;
-  font-weight: 700 !important;
-  font-size: var(--heading-2) !important;
-  color: #FFFFFF !important;
-  background: transparent !important;
-}
-
-/* ==========================================================
-   🤖 BULLES SYSTÈME (Bot) — FOND OPAQUE
-   ========================================================== */
+/* Bulles système (Pistache) */
 .vfrc-system-response .vfrc-message:not([class*="extension"]) {
-  font-family: var(--font-family) !important;
-  font-weight: var(--font-regular) !important;
-  font-size: var(--body-1) !important;
-  line-height: 1.6 !important;
-  
   display: inline-block !important;
-  background: #252540 !important;
-  background-color: #252540 !important;
-  color: #FFFFFF !important;
-  border: 1px solid rgba(139, 92, 246, 0.3) !important;
+  background: rgba(37, 37, 64, 0.95) !important;
+  color: #E5E5E5 !important;
+  border: 1px solid rgba(139, 92, 246, 0.4) !important;
   border-radius: 16px 16px 16px 4px !important;
   padding: 14px 18px !important;
   max-width: 85%;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(139, 92, 246, 0.15) !important;
+  backdrop-filter: blur(10px) !important;
+  transition: all 0.3s ease;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
 }
 
-.vfrc-system-response .vfrc-message:not([class*="extension"]) p,
-.vfrc-system-response .vfrc-message:not([class*="extension"]) span,
-.vfrc-system-response .vfrc-message:not([class*="extension"]) div,
-.vfrc-system-response .vfrc-message:not([class*="extension"]) li {
-  color: #FFFFFF !important;
-  font-size: var(--body-1) !important;
+.vfrc-system-response .vfrc-message:not([class*="extension"]) * {
+  color: #E5E5E5 !important;
 }
 
 .vfrc-system-response .vfrc-message:not([class*="extension"]) strong,
 .vfrc-system-response .vfrc-message:not([class*="extension"]) b {
   color: #FF4D94 !important;
-  font-weight: var(--font-semibold) !important;
+  font-weight: 600 !important;
 }
 
-/* Titres */
-.vfrc-system-response .vfrc-message:not([class*="extension"]) h1 {
-  color: #FF4D94 !important;
-  font-weight: var(--font-bold) !important;
-  font-size: var(--heading-1) !important;
-}
-
-.vfrc-system-response .vfrc-message:not([class*="extension"]) h2 {
-  color: #FFFFFF !important;
-  font-weight: var(--font-semibold) !important;
-  font-size: var(--heading-3) !important;
-}
-
-.vfrc-system-response .vfrc-message:not([class*="extension"]) h3 {
-  color: #94A3B8 !important;
-  font-weight: var(--font-semibold) !important;
-  font-size: var(--heading-4) !important;
-}
-
-/* ==========================================================
-   👤 BULLES UTILISATEUR — FOND ROSE OPAQUE
-   ========================================================== */
+/* Bulles utilisateur */
 .vfrc-user-response > div,
 .vfrc-user-response .vfrc-message {
-  font-family: var(--font-family) !important;
-  font-weight: var(--font-regular) !important;
-  font-size: var(--body-1) !important;
-  line-height: 1.6 !important;
-  
   display: inline-block !important;
-  background: linear-gradient(135deg, #FF0066, #CC0052) !important;
-  background-color: #FF0066 !important;
+  background: linear-gradient(135deg, #FF0066 0%, #CC0052 100%) !important;
   color: #FFFFFF !important;
+  border: 1px solid rgba(255, 100, 150, 0.4) !important;
   border-radius: 16px 16px 4px 16px !important;
-  padding: 14px 18px !important;
+  padding: 12px 16px !important;
   max-width: 85%;
-  box-shadow: 0 4px 20px rgba(255, 0, 102, 0.4) !important;
+  box-shadow: 
+    0 4px 12px rgba(255, 0, 102, 0.4),
+    0 0 20px rgba(255, 0, 102, 0.3) !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
 }
 
 .vfrc-user-response > div *,
@@ -198,35 +175,99 @@ div.vfrc-header--title,
 }
 
 /* ==========================================================
-   🔘 BOUTONS — FOND OPAQUE
+   4. INPUT ZONE - STYLE DARK (COMME EVO)
    ========================================================== */
-.vfrc-button:not(.vfrc-header--button),
-button.vfrc-button:not(.vfrc-header--button) {
-  font-family: var(--font-family) !important;
-  font-weight: var(--font-semibold) !important;
-  font-size: var(--button) !important;
-  
-  background: #1A1A2E !important;
-  background-color: #1A1A2E !important;
-  color: #FF4D94 !important;
-  border: 2px solid #FF0066 !important;
-  border-radius: 10px !important;
-  padding: 12px 20px !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
-  transition: all 0.3s ease !important;
-  cursor: pointer !important;
-  margin: 6px 4px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 8px !important;
+.vfrc-chat-input,
+.vfrc-footer {
+  background: rgba(22, 22, 37, 0.95) !important;
+  border-top: 2px solid rgba(255, 0, 102, 0.3) !important;
+  padding: 16px 12px !important;
+  backdrop-filter: blur(15px) !important;
 }
 
-.vfrc-button:not(.vfrc-header--button):hover {
+/* ✅ SÉLECTEURS DU TEXTAREA COMME EVO GENESIS */
+.vfrc-chat-input__input,
+.vfrc-input,
+.vfrc-chat-input textarea,
+.vfrc-chat-input input {
+  background: rgba(30, 30, 50, 0.9) !important;
+  color: #E5E5E5 !important;
+  border: 1px solid rgba(255, 0, 102, 0.4) !important;
+  border-radius: 12px !important;
+  padding: 12px 16px !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 14px !important;
+}
+
+.vfrc-chat-input__input::placeholder,
+.vfrc-input::placeholder,
+.vfrc-chat-input textarea::placeholder {
+  color: #64748B !important;
+}
+
+/* Focus state */
+.vfrc-chat-input__input:focus,
+.vfrc-input:focus,
+.vfrc-chat-input textarea:focus {
+  border-color: #FF0066 !important;
+  box-shadow: 0 0 0 2px rgba(255, 0, 102, 0.2) !important;
+  outline: none !important;
+  color: #E5E5E5 !important;
+  background: rgba(30, 30, 50, 0.95) !important;
+}
+
+/* ==========================================================
+   5. BOUTON ENVOYER - STYLE ROSE GLOW
+   ========================================================== */
+.vfrc-chat-input--button:not([disabled]),
+#vfrc-send-message:not([disabled]),
+.vfrc-chat-input__send:not([disabled]) {
+  background: linear-gradient(135deg, #FF0066 0%, #FF4D94 100%) !important;
+  border-radius: 50% !important;
+  width: 44px !important;
+  height: 44px !important;
+  box-shadow: 
+    0 4px 12px rgba(255, 0, 102, 0.5),
+    0 0 20px rgba(255, 0, 102, 0.3) !important;
+  border: none !important;
+  cursor: pointer !important;
+}
+
+.vfrc-chat-input--button[disabled],
+#vfrc-send-message[disabled],
+.vfrc-chat-input__send[disabled] {
+  background: rgba(100, 100, 120, 0.5) !important;
+  box-shadow: none !important;
+}
+
+/* ==========================================================
+   6. BOUTONS (Choices) - STYLE DARK AVEC BORDURE ROSE
+   ========================================================== */
+.vfrc-button:not(.vfrc-header--button),
+.vfrc-choice-button,
+button.vfrc-button:not(.vfrc-header--button) {
+  background: rgba(30, 30, 50, 0.8) !important;
+  color: #FF4D94 !important;
+  border: 2px solid rgba(255, 0, 102, 0.5) !important;
+  border-radius: 12px !important;
+  padding: 12px 20px !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  margin: 6px 4px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+.vfrc-button:not(.vfrc-header--button):hover,
+.vfrc-choice-button:hover {
   background: linear-gradient(135deg, #FF0066, #CC0052) !important;
-  background-color: #FF0066 !important;
   color: #FFFFFF !important;
-  box-shadow: 0 6px 20px rgba(255, 0, 102, 0.5) !important;
+  border-color: #FF0066 !important;
+  box-shadow: 
+    0 6px 20px rgba(255, 0, 102, 0.5),
+    0 0 25px rgba(255, 0, 102, 0.3) !important;
   transform: translateY(-2px) !important;
 }
 
@@ -239,12 +280,11 @@ button.vfrc-button:not(.vfrc-header--button) {
 }
 
 /* ==========================================================
-   ⏳ TYPING INDICATOR — FOND OPAQUE
+   7. TYPING INDICATOR
    ========================================================== */
 .vfrc-typing-indicator {
-  background: #252540 !important;
-  background-color: #252540 !important;
-  border: 1px solid rgba(139, 92, 246, 0.3) !important;
+  background: rgba(37, 37, 64, 0.95) !important;
+  border: 1px solid rgba(139, 92, 246, 0.4) !important;
   border-radius: 16px 16px 16px 4px !important;
   padding: 12px 16px !important;
 }
@@ -254,82 +294,7 @@ button.vfrc-button:not(.vfrc-header--button) {
 }
 
 /* ==========================================================
-   ⌨️ FOOTER + INPUT — FOND OPAQUE + TEXTAREA SIMPLE
-   ========================================================== */
-.vfrc-footer,
-.vfrc-footer__content,
-div.vfrc-footer {
-  background: #161625 !important;
-  background-color: #161625 !important;
-  border-top: 1px solid rgba(255, 0, 102, 0.2) !important;
-}
-
-/* ✅ TEXTAREA SIMPLE (comme v6 qui fonctionne) */
-.vfrc-chat-input textarea,
-.vfrc-chat-input input {
-  font-family: var(--font-family) !important;
-  font-weight: var(--font-regular) !important;
-  font-size: var(--body-1) !important;
-  line-height: 1.5 !important;
-  color: #1E293B !important;
-  background: #FFFFFF !important;
-  border: 2px solid #FF0066 !important;
-  border-radius: 12px !important;
-}
-
-.vfrc-chat-input textarea::placeholder,
-.vfrc-chat-input input::placeholder {
-  color: #64748B !important;
-}
-
-/* ==========================================================
-   📤 BOUTON ENVOYER
-   ========================================================== */
-#vfrc-send-message svg,
-.vfrc-chat-input__send svg {
-  display: none !important;
-}
-
-#vfrc-send-message::after,
-.vfrc-chat-input__send::after {
-  content: "ENVOYER";
-  font-family: var(--font-family);
-  font-weight: var(--font-semibold);
-  font-size: var(--button);
-  letter-spacing: 0.5px;
-}
-
-#vfrc-send-message,
-.vfrc-chat-input__send {
-  background: none !important;
-  border: none !important;
-  padding: 8px 14px !important;
-  color: rgba(255, 0, 102, 0.35) !important;
-  cursor: not-allowed;
-  min-width: 100px !important;
-}
-
-#vfrc-send-message:not([disabled]),
-.vfrc-chat-input__send:not([disabled]) {
-  color: #FF0066 !important;
-  cursor: pointer;
-}
-
-#vfrc-send-message:not([disabled]):hover,
-.vfrc-chat-input__send:not([disabled]):hover {
-  color: #FF4D94 !important;
-  text-decoration: underline;
-}
-
-.vfrc-chat-input__actions {
-  display: flex !important;
-  align-items: center !important;
-  padding-right: 8px !important;
-  overflow: visible !important;
-}
-
-/* ==========================================================
-   📜 SCROLLBAR ROSE
+   8. SCROLLBAR - ROSE GLOW
    ========================================================== */
 .vfrc-chat--dialog,
 .vfrc-chat-dialog,
@@ -347,8 +312,9 @@ div.vfrc-footer {
 .vfrc-chat--dialog::-webkit-scrollbar-thumb,
 .vfrc-chat-dialog::-webkit-scrollbar-thumb,
 .vfrc-chat-dialog__container::-webkit-scrollbar-thumb {
-  background: #FF0066;
+  background: linear-gradient(180deg, #FF0066 0%, #CC0052 100%);
   border-radius: 999px;
+  box-shadow: 0 0 10px rgba(255, 0, 102, 0.5);
 }
 
 .vfrc-chat--dialog::-webkit-scrollbar-track,
@@ -358,12 +324,11 @@ div.vfrc-footer {
 }
 
 /* ==========================================================
-   🖼️ CARDS — FOND OPAQUE
+   9. CARDS
    ========================================================== */
 .vfrc-card {
-  background: #252540 !important;
-  background-color: #252540 !important;
-  border: 1px solid rgba(139, 92, 246, 0.2) !important;
+  background: rgba(37, 37, 64, 0.95) !important;
+  border: 1px solid rgba(139, 92, 246, 0.3) !important;
   border-radius: 12px !important;
 }
 
@@ -376,16 +341,40 @@ div.vfrc-footer {
 }
 
 /* ==========================================================
-   🛡️ EXTENSIONS — Ne pas toucher
+   10. ANIMATIONS
+   ========================================================== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.vfrc-message {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+/* ==========================================================
+   11. EXTENSIONS - Ne pas toucher
    ========================================================== */
 .vfrc-message[class*="extension"] {
   background: transparent !important;
   padding: 0 !important;
   border: none !important;
+  box-shadow: none !important;
 }
 
 /* ==========================================================
-   📱 Responsive
+   12. WATERMARK - MASQUER
+   ========================================================== */
+.vfrc-footer--watermark,
+.vfrc-watermark,
+.vfrc-powered-by,
+[class*="watermark"] {
+  display: none !important;
+  height: 0 !important;
+}
+
+/* ==========================================================
+   13. RESPONSIVE
    ========================================================== */
 @media (max-width: 640px) {
   .vfrc-system-response .vfrc-message:not([class*="extension"]),
