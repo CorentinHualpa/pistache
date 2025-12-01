@@ -1,7 +1,8 @@
 /* ==========================================================
-   🐢 Pistache × Voiceflow — Dark Mode v3.0 ULTRA-ROBUSTE
+   🐢 Pistache × Voiceflow — Dark Mode v4.0
    
-   ⚠️ VERSION BLINDÉE : Sélecteurs agressifs, 100% opaque
+   ✅ FIX: Header dégradé propre
+   ✅ FIX: Texte input visible (blanc)
    ========================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
@@ -28,7 +29,6 @@
   background-color: #0F0F1A !important;
 }
 
-/* Le conteneur racine */
 .vfrc-chat,
 .vfrc-chat__container,
 .vfrc-chat__container-inner,
@@ -41,16 +41,20 @@ div[class*="vfrc-chat"] {
 }
 
 /* ==========================================================
-   🔝 HEADER ROSE
+   🔝 HEADER ROSE — FIX DÉGRADÉ
    ========================================================== */
 .vfrc-header,
 [class*="vfrc-header"],
-div.vfrc-header {
-  background: linear-gradient(135deg, #FF0066 0%, #CC0052 100%) !important;
+div.vfrc-header,
+.vfrc-header--container-inner,
+[class*="header--container"] {
+  background: #FF0066 !important;
   background-color: #FF0066 !important;
   padding: 16px 20px !important;
   border-bottom: none !important;
   box-shadow: 0 4px 20px rgba(255, 0, 102, 0.4) !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 .vfrc-header--title,
@@ -125,7 +129,6 @@ div[class*="dialog"] {
   line-height: 1.6 !important;
 }
 
-/* Texte dans les bulles */
 .vfrc-system-response .vfrc-message *,
 .vfrc-system-response [class*="message"] * {
   color: #FFFFFF !important;
@@ -133,7 +136,6 @@ div[class*="dialog"] {
   font-size: 14px !important;
 }
 
-/* Texte en gras = rose */
 .vfrc-system-response .vfrc-message strong,
 .vfrc-system-response .vfrc-message b {
   color: #FF4D94 !important;
@@ -200,7 +202,6 @@ button.vfrc-button:not(.vfrc-header--button),
   transform: translateY(-2px) !important;
 }
 
-/* Conteneur boutons */
 .vfrc-button-container,
 [class*="button-container"] {
   background: transparent !important;
@@ -211,7 +212,7 @@ button.vfrc-button:not(.vfrc-header--button),
 }
 
 /* ==========================================================
-   ⏳ TYPING INDICATOR — PLUS DE FOND BLANC
+   ⏳ TYPING INDICATOR
    ========================================================== */
 .vfrc-typing-indicator,
 [class*="typing-indicator"],
@@ -250,7 +251,7 @@ button.vfrc-button:not(.vfrc-header--button),
 }
 
 /* ==========================================================
-   ⌨️ FOOTER / INPUT — FOND OPAQUE
+   ⌨️ FOOTER / INPUT — FOND OPAQUE + TEXTE BLANC
    ========================================================== */
 .vfrc-footer,
 .vfrc-chat-input,
@@ -263,17 +264,29 @@ button.vfrc-button:not(.vfrc-header--button),
   padding: 14px 18px !important;
 }
 
+/* ✅ FIX TEXTAREA — Texte BLANC visible */
 .vfrc-chat-input textarea,
 .vfrc-chat-input input,
 [class*="chat-input"] textarea,
-[class*="chat-input"] input {
+[class*="chat-input"] input,
+textarea.vfrc-chat-input,
+textarea[class*="vfrc-chat-input"],
+textarea[class*="_"] {
   background: #1E1E32 !important;
   background-color: #1E1E32 !important;
   color: #FFFFFF !important;
+  caret-color: #FF0066 !important;
   border: 1px solid rgba(255, 0, 102, 0.3) !important;
   border-radius: 12px !important;
   padding: 12px 16px !important;
   font-size: 14px !important;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* ✅ Force le texte blanc même sur les classes dynamiques */
+textarea,
+textarea[class] {
+  color: #FFFFFF !important;
 }
 
 .vfrc-chat-input textarea:focus,
@@ -283,10 +296,12 @@ button.vfrc-button:not(.vfrc-header--button),
   outline: none !important;
   border-color: #FF0066 !important;
   box-shadow: 0 0 0 3px rgba(255, 0, 102, 0.2) !important;
+  color: #FFFFFF !important;
 }
 
 .vfrc-chat-input textarea::placeholder,
-.vfrc-chat-input input::placeholder {
+.vfrc-chat-input input::placeholder,
+textarea::placeholder {
   color: #64748B !important;
 }
 
@@ -344,13 +359,11 @@ button.vfrc-button:not(.vfrc-header--button),
 /* ==========================================================
    🛡️ OVERRIDE CLASSES DYNAMIQUES
    ========================================================== */
-/* Voiceflow génère des classes comme _abc123, on les force */
 [class^="_"],
 [class*=" _"] {
   background-color: inherit !important;
 }
 
-/* S'assurer que les overlays sont opaques */
 .vfrc-chat--overlay,
 [class*="overlay"] {
   background: #0F0F1A !important;
