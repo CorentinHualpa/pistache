@@ -1,7 +1,9 @@
 /* ==========================================================
-   🐢 Pistache × Voiceflow — Dark Mode v13.0
+   🐢 Pistache × Voiceflow — Dark Mode v14.0
    
-   ✅ FIX: Padding-bottom sur zone dialogue (contenu plus coupé)
+   ✅ Fond noir ultra-profond (#08080F)
+   ✅ Glow ambiant rose/violet dans les coins
+   ✅ Fix centrage logo header
    ========================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
@@ -14,6 +16,7 @@
   flex-direction: column !important;
   height: 100% !important;
   min-height: 100% !important;
+  position: relative !important;
 }
 
 .vfrc-widget,
@@ -30,28 +33,59 @@
   flex-direction: column !important;
   height: 100% !important;
   flex: 1 !important;
+  position: relative !important;
 }
 
-/* ✅ FIX: Zone de dialogue avec padding-bottom */
+/* ✅ Zone de dialogue avec padding-bottom + FOND STYLÉ */
 .vfrc-chat--dialog {
   display: flex !important;
   flex-direction: column !important;
   flex: 1 !important;
-  padding-bottom: 70px !important; /* ✅ ESPACE POUR LE FOOTER */
+  padding-bottom: 70px !important;
   overflow-y: auto !important;
+  
+  /* ✅ FOND NOIR PROFOND + DÉGRADÉ SUBTIL */
+  background: 
+    radial-gradient(ellipse at 0% 0%, rgba(255, 0, 102, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 100% 0%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 100% 100%, rgba(255, 0, 102, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 0% 100%, rgba(139, 92, 246, 0.04) 0%, transparent 50%),
+    linear-gradient(180deg, #08080F 0%, #0A0A14 50%, #08080F 100%) !important;
+  background-color: #08080F !important;
 }
 
 /* ==========================================================
-   1. HEADER ROSE - COMPACT
+   1. HEADER ROSE - LOGO CENTRÉ
    ========================================================== */
 .vfrc-header,
-.vfrc-header--container-inner,
-div.vfrc-header,
-div.vfrc-header--container-inner {
+div.vfrc-header {
   background: #FF0066 !important;
   background-color: #FF0066 !important;
-  box-shadow: 0 4px 20px rgba(255, 0, 102, 0.4) !important;
+  box-shadow: 
+    0 4px 20px rgba(255, 0, 102, 0.4),
+    0 0 40px rgba(255, 0, 102, 0.2) !important;
   padding: 12px 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+.vfrc-header--container-inner,
+div.vfrc-header--container-inner {
+  background: transparent !important;
+  display: flex !important;
+  align-items: center !important;
+  flex: 1 !important;
+}
+
+/* ✅ FIX: Avatar centré verticalement */
+.vfrc-header .vfrc-avatar,
+.vfrc-header img.vfrc-avatar {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 50% !important;
+  flex-shrink: 0 !important;
+  object-fit: cover !important;
 }
 
 .vfrc-header--title,
@@ -61,6 +95,9 @@ div.vfrc-header--title {
   font-size: 18px !important;
   color: #FFFFFF !important;
   background: transparent !important;
+  line-height: 1 !important;
+  display: flex !important;
+  align-items: center !important;
 }
 
 .vfrc-header--button,
@@ -71,21 +108,19 @@ button.vfrc-header--button,
 }
 
 /* ==========================================================
-   2. FOND SOMBRE OPAQUE
+   2. FOND SOMBRE - CONTENEURS PRINCIPAUX
    ========================================================== */
 .vfrc-chat,
 .vfrc-chat-dialog,
-.vfrc-chat--dialog,
 .vfrc-widget,
 .vfrc-chat-dialog__content,
 .vfrc-chat-body {
-  background: #0F0F1A !important;
-  background-color: #0F0F1A !important;
+  background: #08080F !important;
+  background-color: #08080F !important;
 }
 
 .vfrc-assistant-info {
-  background: #0F0F1A !important;
-  background-color: #0F0F1A !important;
+  background: transparent !important;
   padding: 12px !important;
 }
 
@@ -100,17 +135,21 @@ button.vfrc-header--button,
 }
 
 /* ==========================================================
-   3. BULLES SYSTÈME (Bot) - COMPACT
+   3. BULLES SYSTÈME (Bot) - GLASSMORPHISM
    ========================================================== */
 .vfrc-system-response .vfrc-message:not([class*="extension"]) {
   display: inline-block !important;
-  background: rgba(37, 37, 64, 0.95) !important;
+  background: rgba(30, 30, 50, 0.85) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
   color: #E5E5E5 !important;
-  border: 1px solid rgba(139, 92, 246, 0.4) !important;
+  border: 1px solid rgba(139, 92, 246, 0.3) !important;
   border-radius: 12px 12px 12px 4px !important;
   padding: 10px 14px !important;
   max-width: 85%;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(139, 92, 246, 0.08) !important;
   font-family: 'Plus Jakarta Sans', sans-serif !important;
   font-size: 13px !important;
   line-height: 1.5 !important;
@@ -128,7 +167,7 @@ button.vfrc-header--button,
 }
 
 /* ==========================================================
-   4. BULLES UTILISATEUR - COMPACT
+   4. BULLES UTILISATEUR - GLOW ROSE
    ========================================================== */
 .vfrc-user-response > div,
 .vfrc-user-response .vfrc-message {
@@ -138,7 +177,9 @@ button.vfrc-header--button,
   border-radius: 12px 12px 4px 12px !important;
   padding: 10px 14px !important;
   max-width: 85%;
-  box-shadow: 0 2px 8px rgba(255, 0, 102, 0.3) !important;
+  box-shadow: 
+    0 4px 16px rgba(255, 0, 102, 0.4),
+    0 0 30px rgba(255, 0, 102, 0.2) !important;
   font-family: 'Plus Jakarta Sans', sans-serif !important;
   font-size: 13px !important;
 }
@@ -154,13 +195,14 @@ button.vfrc-header--button,
 }
 
 /* ==========================================================
-   5. BOUTONS - COMPACT
+   5. BOUTONS - GLOW SUBTIL
    ========================================================== */
 .vfrc-button:not(.vfrc-header--button):not(#vfrc-start-chat),
 button.vfrc-button:not(.vfrc-header--button):not(#vfrc-start-chat) {
-  background: rgba(30, 30, 50, 0.8) !important;
+  background: rgba(20, 20, 35, 0.9) !important;
+  backdrop-filter: blur(8px) !important;
   color: #FF4D94 !important;
-  border: 1.5px solid rgba(255, 0, 102, 0.5) !important;
+  border: 1.5px solid rgba(255, 0, 102, 0.4) !important;
   border-radius: 8px !important;
   padding: 8px 14px !important;
   font-family: 'Plus Jakarta Sans', sans-serif !important;
@@ -169,12 +211,17 @@ button.vfrc-button:not(.vfrc-header--button):not(#vfrc-start-chat) {
   cursor: pointer !important;
   transition: all 0.3s ease !important;
   margin: 3px 3px !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
 }
 
 .vfrc-button:not(.vfrc-header--button):not(#vfrc-start-chat):hover {
   background: linear-gradient(135deg, #FF0066, #CC0052) !important;
   color: #FFFFFF !important;
   transform: translateY(-1px) !important;
+  box-shadow: 
+    0 4px 20px rgba(255, 0, 102, 0.5),
+    0 0 30px rgba(255, 0, 102, 0.3) !important;
+  border-color: #FF0066 !important;
 }
 
 .vfrc-button-container,
@@ -187,111 +234,102 @@ button.vfrc-button:not(.vfrc-header--button):not(#vfrc-start-chat) {
 }
 
 /* ==========================================================
-   6. TYPING INDICATOR - COMPACT
+   6. TYPING INDICATOR - GLOW
    ========================================================== */
 .vfrc-typing-indicator {
-  background: rgba(37, 37, 64, 0.95) !important;
-  border: 1px solid rgba(139, 92, 246, 0.4) !important;
+  background: rgba(30, 30, 50, 0.85) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(139, 92, 246, 0.3) !important;
   border-radius: 10px !important;
   padding: 8px 12px !important;
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.1) !important;
 }
 
 .vfrc-typing-indicator span {
   background: #FF0066 !important;
   width: 6px !important;
   height: 6px !important;
+  box-shadow: 0 0 8px rgba(255, 0, 102, 0.6) !important;
 }
 
 /* ==========================================================
-   7. FOOTER - POSITION FIXE EN BAS
+   7. FOOTER - GLOW SUBTIL
    ========================================================== */
 .vfrc-footer,
 div.vfrc-footer {
-  background: #161625 !important;
-  background-color: #161625 !important;
-  border-top: 1px solid rgba(255, 0, 102, 0.3) !important;
+  background: rgba(12, 12, 20, 0.95) !important;
+  backdrop-filter: blur(15px) !important;
+  border-top: 1px solid rgba(255, 0, 102, 0.2) !important;
   padding: 8px !important;
-  position: absolute !important; /* ✅ POSITION FIXE */
+  position: absolute !important;
   bottom: 0 !important;
   left: 0 !important;
   right: 0 !important;
   z-index: 100 !important;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3) !important;
 }
 
-/* ✅ MASQUER: Bouton "Start new chat" */
+/* MASQUER éléments inutiles */
 .vfrc-footer__start-button,
-div.vfrc-footer__start-button,
 #vfrc-start-chat,
-[class*="start-button"] {
-  display: none !important;
-  height: 0 !important;
-  width: 0 !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  visibility: hidden !important;
-}
-
-/* ✅ MASQUER: Bouton "Scroll to bottom" */
+[class*="start-button"],
 .vfrc-footer__content-scroll-to-bottom,
 [class*="scroll-to-bottom"],
 .oq48l92,
-.oq48l93 {
-  display: none !important;
-  height: 0 !important;
-  width: 0 !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  visibility: hidden !important;
-}
-
-/* ✅ MASQUER: Footer links */
+.oq48l93,
 .vfrc-footer__links,
-div.vfrc-footer__links,
 [class*="footer__links"],
 .jsli361 {
   display: none !important;
   height: 0 !important;
+  width: 0 !important;
   padding: 0 !important;
   margin: 0 !important;
+  visibility: hidden !important;
 }
 
-/* Footer content */
-.vfrc-footer__content,
-div.vfrc-footer__content {
+.vfrc-footer__content {
   background: transparent !important;
   padding: 0 !important;
   margin: 0 !important;
 }
 
 /* ==========================================================
-   8. INPUT CONTAINER - COMPACT
+   8. INPUT CONTAINER - GLOW ROSE
    ========================================================== */
 .vfrc-input-container,
 div.vfrc-input-container,
-[class*="input-container"],
 ._1gdvh9t0 {
-  background: #1E1E32 !important;
-  background-color: #1E1E32 !important;
-  border: 1.5px solid rgba(255, 0, 102, 0.4) !important;
+  background: rgba(20, 20, 35, 0.9) !important;
+  border: 1.5px solid rgba(255, 0, 102, 0.3) !important;
   border-radius: 8px !important;
   padding: 2px 4px !important;
   margin: 0 !important;
+  box-shadow: 
+    0 0 15px rgba(255, 0, 102, 0.1),
+    inset 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+  transition: all 0.3s ease !important;
+}
+
+.vfrc-input-container:focus-within {
+  border-color: rgba(255, 0, 102, 0.5) !important;
+  box-shadow: 
+    0 0 25px rgba(255, 0, 102, 0.15),
+    inset 0 1px 2px rgba(0, 0, 0, 0.2) !important;
 }
 
 .vfrc-chat-focus-ring,
-div.vfrc-chat-focus-ring,
 [class*="focus-ring"] {
   display: none !important;
 }
 
-.vfrc-chat-input__container-inner,
-[class*="container-inner"] {
+.vfrc-chat-input__container-inner {
   background: transparent !important;
   padding: 0 !important;
 }
 
 /* ==========================================================
-   9. TEXTAREA - COMPACT
+   9. TEXTAREA
    ========================================================== */
 .vfrc-chat-input,
 textarea.vfrc-chat-input,
@@ -321,7 +359,7 @@ textarea.vfrc-chat-input:focus {
 }
 
 /* ==========================================================
-   10. BOUTON ENVOYER - COMPACT
+   10. BOUTON ENVOYER - GLOW
    ========================================================== */
 .vfrc-chat-input__send,
 #vfrc-send-message {
@@ -337,12 +375,23 @@ textarea.vfrc-chat-input:focus {
   align-items: center !important;
   justify-content: center !important;
   margin: 2px !important;
+  transition: all 0.3s ease !important;
 }
 
 .vfrc-chat-input__send:not([disabled]),
 #vfrc-send-message:not([disabled]) {
   background: linear-gradient(135deg, #FF0066, #CC0052) !important;
-  box-shadow: 0 2px 6px rgba(255, 0, 102, 0.4) !important;
+  box-shadow: 
+    0 2px 10px rgba(255, 0, 102, 0.5),
+    0 0 20px rgba(255, 0, 102, 0.3) !important;
+}
+
+.vfrc-chat-input__send:not([disabled]):hover,
+#vfrc-send-message:not([disabled]):hover {
+  transform: scale(1.1) !important;
+  box-shadow: 
+    0 4px 15px rgba(255, 0, 102, 0.6),
+    0 0 30px rgba(255, 0, 102, 0.4) !important;
 }
 
 .vfrc-chat-input__send svg,
@@ -358,7 +407,7 @@ textarea.vfrc-chat-input:focus {
 }
 
 /* ==========================================================
-   11. FIX SPACERS ET ÉLÉMENTS PARASITES
+   11. FIX SPACERS
    ========================================================== */
 .vfrc-chat--bottom-spacer,
 [class*="bottom-spacer"] {
@@ -367,13 +416,13 @@ textarea.vfrc-chat-input:focus {
 }
 
 /* ==========================================================
-   12. SCROLLBAR
+   12. SCROLLBAR - GLOW
    ========================================================== */
 .vfrc-chat--dialog,
 .vfrc-chat-dialog,
 .vfrc-chat-dialog__container {
   scrollbar-width: thin;
-  scrollbar-color: #FF0066 #161625;
+  scrollbar-color: #FF0066 #0A0A14;
 }
 
 .vfrc-chat--dialog::-webkit-scrollbar,
@@ -383,23 +432,26 @@ textarea.vfrc-chat-input:focus {
 
 .vfrc-chat--dialog::-webkit-scrollbar-thumb,
 .vfrc-chat-dialog::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #FF0066, #CC0052);
+  background: linear-gradient(180deg, #FF0066, #8B5CF6);
   border-radius: 999px;
+  box-shadow: 0 0 10px rgba(255, 0, 102, 0.5);
 }
 
 .vfrc-chat--dialog::-webkit-scrollbar-track,
 .vfrc-chat-dialog::-webkit-scrollbar-track {
-  background: #161625;
+  background: #0A0A14;
 }
 
 /* ==========================================================
-   13. CARDS
+   13. CARDS - GLASSMORPHISM
    ========================================================== */
 .vfrc-card {
-  background: rgba(37, 37, 64, 0.95) !important;
+  background: rgba(30, 30, 50, 0.85) !important;
+  backdrop-filter: blur(10px) !important;
   border: 1px solid rgba(139, 92, 246, 0.3) !important;
   border-radius: 10px !important;
   padding: 10px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
 }
 
 .vfrc-card--title { 
@@ -437,6 +489,11 @@ textarea.vfrc-chat-input:focus {
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 102, 0.3); }
+  50% { box-shadow: 0 0 30px rgba(255, 0, 102, 0.5); }
 }
 
 .vfrc-message {
