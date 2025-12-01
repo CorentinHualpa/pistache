@@ -1,10 +1,7 @@
 /* ==========================================================
-   🐢 Pistache × Voiceflow — Dark Mode v12.0
+   🐢 Pistache × Voiceflow — Dark Mode v13.0
    
-   ✅ FIX: Masquer Start new chat button
-   ✅ FIX: Masquer scroll-to-bottom button
-   ✅ FIX: Masquer footer links
-   ✅ FIX: Footer vraiment compact
+   ✅ FIX: Padding-bottom sur zone dialogue (contenu plus coupé)
    ========================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
@@ -21,8 +18,7 @@
 
 .vfrc-widget,
 .vfrc-chat,
-.vfrc-chat-dialog,
-.vfrc-chat--dialog {
+.vfrc-chat-dialog {
   display: flex !important;
   flex-direction: column !important;
   height: 100% !important;
@@ -34,6 +30,15 @@
   flex-direction: column !important;
   height: 100% !important;
   flex: 1 !important;
+}
+
+/* ✅ FIX: Zone de dialogue avec padding-bottom */
+.vfrc-chat--dialog {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 !important;
+  padding-bottom: 70px !important; /* ✅ ESPACE POUR LE FOOTER */
+  overflow-y: auto !important;
 }
 
 /* ==========================================================
@@ -198,7 +203,7 @@ button.vfrc-button:not(.vfrc-header--button):not(#vfrc-start-chat) {
 }
 
 /* ==========================================================
-   7. FOOTER - MASQUER LES ÉLÉMENTS INUTILES
+   7. FOOTER - POSITION FIXE EN BAS
    ========================================================== */
 .vfrc-footer,
 div.vfrc-footer {
@@ -206,6 +211,11 @@ div.vfrc-footer {
   background-color: #161625 !important;
   border-top: 1px solid rgba(255, 0, 102, 0.3) !important;
   padding: 8px !important;
+  position: absolute !important; /* ✅ POSITION FIXE */
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 100 !important;
 }
 
 /* ✅ MASQUER: Bouton "Start new chat" */
@@ -245,7 +255,7 @@ div.vfrc-footer__links,
   margin: 0 !important;
 }
 
-/* Footer content - juste l'input */
+/* Footer content */
 .vfrc-footer__content,
 div.vfrc-footer__content {
   background: transparent !important;
