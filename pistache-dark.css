@@ -1,10 +1,10 @@
 /* ==========================================================
-   🐢 Pistache × Voiceflow — Dark Mode v10.0 COMPACT
+   🐢 Pistache × Voiceflow — Dark Mode v12.0
    
-   ✅ Bulles plus compactes
-   ✅ Marges réduites
-   ✅ Zone input plus petite
-   ✅ Moins d'espace entre boutons et messages
+   ✅ FIX: Masquer Start new chat button
+   ✅ FIX: Masquer scroll-to-bottom button
+   ✅ FIX: Masquer footer links
+   ✅ FIX: Footer vraiment compact
    ========================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
@@ -46,14 +46,14 @@ div.vfrc-header--container-inner {
   background: #FF0066 !important;
   background-color: #FF0066 !important;
   box-shadow: 0 4px 20px rgba(255, 0, 102, 0.4) !important;
-  padding: 12px 16px !important; /* Réduit */
+  padding: 12px 16px !important;
 }
 
 .vfrc-header--title,
 div.vfrc-header--title {
   font-family: 'Plus Jakarta Sans', sans-serif !important;
   font-weight: 700 !important;
-  font-size: 18px !important; /* Réduit */
+  font-size: 18px !important;
   color: #FFFFFF !important;
   background: transparent !important;
 }
@@ -81,7 +81,7 @@ button.vfrc-header--button,
 .vfrc-assistant-info {
   background: #0F0F1A !important;
   background-color: #0F0F1A !important;
-  padding: 12px !important; /* Réduit */
+  padding: 12px !important;
 }
 
 .vfrc-assistant-info__name {
@@ -102,12 +102,12 @@ button.vfrc-header--button,
   background: rgba(37, 37, 64, 0.95) !important;
   color: #E5E5E5 !important;
   border: 1px solid rgba(139, 92, 246, 0.4) !important;
-  border-radius: 12px 12px 12px 4px !important; /* Réduit */
-  padding: 10px 14px !important; /* Réduit */
+  border-radius: 12px 12px 12px 4px !important;
+  padding: 10px 14px !important;
   max-width: 85%;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important; /* Réduit */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
   font-family: 'Plus Jakarta Sans', sans-serif !important;
-  font-size: 13px !important; /* Réduit */
+  font-size: 13px !important;
   line-height: 1.5 !important;
 }
 
@@ -130,12 +130,12 @@ button.vfrc-header--button,
   display: inline-block !important;
   background: linear-gradient(135deg, #FF0066 0%, #CC0052 100%) !important;
   color: #FFFFFF !important;
-  border-radius: 12px 12px 4px 12px !important; /* Réduit */
-  padding: 10px 14px !important; /* Réduit */
+  border-radius: 12px 12px 4px 12px !important;
+  padding: 10px 14px !important;
   max-width: 85%;
-  box-shadow: 0 2px 8px rgba(255, 0, 102, 0.3) !important; /* Réduit */
+  box-shadow: 0 2px 8px rgba(255, 0, 102, 0.3) !important;
   font-family: 'Plus Jakarta Sans', sans-serif !important;
-  font-size: 13px !important; /* Réduit */
+  font-size: 13px !important;
 }
 
 .vfrc-user-response > div *,
@@ -144,43 +144,41 @@ button.vfrc-header--button,
   font-size: 13px !important;
 }
 
-/* Marge des messages - RÉDUITE */
 .vfrc-message:not([class*="extension"]) { 
-  margin: 6px 0 !important; /* Réduit de 12px à 6px */
+  margin: 6px 0 !important;
 }
 
 /* ==========================================================
    5. BOUTONS - COMPACT
    ========================================================== */
-.vfrc-button:not(.vfrc-header--button),
-button.vfrc-button:not(.vfrc-header--button) {
+.vfrc-button:not(.vfrc-header--button):not(#vfrc-start-chat),
+button.vfrc-button:not(.vfrc-header--button):not(#vfrc-start-chat) {
   background: rgba(30, 30, 50, 0.8) !important;
   color: #FF4D94 !important;
-  border: 1.5px solid rgba(255, 0, 102, 0.5) !important; /* Réduit */
-  border-radius: 8px !important; /* Réduit */
-  padding: 8px 14px !important; /* Réduit */
+  border: 1.5px solid rgba(255, 0, 102, 0.5) !important;
+  border-radius: 8px !important;
+  padding: 8px 14px !important;
   font-family: 'Plus Jakarta Sans', sans-serif !important;
   font-weight: 600 !important;
-  font-size: 12px !important; /* Réduit */
+  font-size: 12px !important;
   cursor: pointer !important;
   transition: all 0.3s ease !important;
-  margin: 3px 3px !important; /* Réduit */
+  margin: 3px 3px !important;
 }
 
-.vfrc-button:not(.vfrc-header--button):hover {
+.vfrc-button:not(.vfrc-header--button):not(#vfrc-start-chat):hover {
   background: linear-gradient(135deg, #FF0066, #CC0052) !important;
   color: #FFFFFF !important;
   transform: translateY(-1px) !important;
 }
 
-/* Conteneur boutons - COMPACT */
 .vfrc-button-container,
 .vfrc-system-response--actions {
   display: flex !important;
   flex-wrap: wrap !important;
-  gap: 4px !important; /* Réduit */
-  padding: 4px 0 !important; /* Réduit */
-  margin-top: 2px !important; /* Réduit */
+  gap: 4px !important;
+  padding: 4px 0 !important;
+  margin-top: 2px !important;
 }
 
 /* ==========================================================
@@ -190,7 +188,7 @@ button.vfrc-button:not(.vfrc-header--button) {
   background: rgba(37, 37, 64, 0.95) !important;
   border: 1px solid rgba(139, 92, 246, 0.4) !important;
   border-radius: 10px !important;
-  padding: 8px 12px !important; /* Réduit */
+  padding: 8px 12px !important;
 }
 
 .vfrc-typing-indicator span {
@@ -200,130 +198,166 @@ button.vfrc-button:not(.vfrc-header--button) {
 }
 
 /* ==========================================================
-   7. FOOTER & INPUT - COMPACT
+   7. FOOTER - MASQUER LES ÉLÉMENTS INUTILES
    ========================================================== */
 .vfrc-footer,
-.vfrc-footer__content,
 div.vfrc-footer {
   background: #161625 !important;
   background-color: #161625 !important;
-  border-top: 1px solid rgba(255, 0, 102, 0.3) !important; /* Réduit */
-  padding: 10px 10px !important; /* Réduit */
+  border-top: 1px solid rgba(255, 0, 102, 0.3) !important;
+  padding: 8px !important;
 }
 
+/* ✅ MASQUER: Bouton "Start new chat" */
+.vfrc-footer__start-button,
+div.vfrc-footer__start-button,
+#vfrc-start-chat,
+[class*="start-button"] {
+  display: none !important;
+  height: 0 !important;
+  width: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  visibility: hidden !important;
+}
+
+/* ✅ MASQUER: Bouton "Scroll to bottom" */
+.vfrc-footer__content-scroll-to-bottom,
+[class*="scroll-to-bottom"],
+.oq48l92,
+.oq48l93 {
+  display: none !important;
+  height: 0 !important;
+  width: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  visibility: hidden !important;
+}
+
+/* ✅ MASQUER: Footer links */
 .vfrc-footer__links,
 div.vfrc-footer__links,
-[class*="footer__links"] {
+[class*="footer__links"],
+.jsli361 {
   display: none !important;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
+/* Footer content - juste l'input */
+.vfrc-footer__content,
+div.vfrc-footer__content {
+  background: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* ==========================================================
+   8. INPUT CONTAINER - COMPACT
+   ========================================================== */
 .vfrc-input-container,
 div.vfrc-input-container,
-[class*="input-container"] {
+[class*="input-container"],
+._1gdvh9t0 {
   background: #1E1E32 !important;
   background-color: #1E1E32 !important;
-  border: 1.5px solid rgba(255, 0, 102, 0.4) !important; /* Réduit */
-  border-radius: 10px !important; /* Réduit */
-  padding: 4px !important; /* Ajout padding interne */
+  border: 1.5px solid rgba(255, 0, 102, 0.4) !important;
+  border-radius: 8px !important;
+  padding: 2px 4px !important;
+  margin: 0 !important;
 }
 
 .vfrc-chat-focus-ring,
 div.vfrc-chat-focus-ring,
 [class*="focus-ring"] {
-  background: transparent !important;
-  background-color: transparent !important;
+  display: none !important;
 }
 
 .vfrc-chat-input__container-inner,
 [class*="container-inner"] {
   background: transparent !important;
-  background-color: transparent !important;
+  padding: 0 !important;
 }
 
 /* ==========================================================
-   8. TEXTAREA - COMPACT
+   9. TEXTAREA - COMPACT
    ========================================================== */
 .vfrc-chat-input,
 textarea.vfrc-chat-input,
-.vfrc-chat-input._1gdvh9ta,
-textarea._1gdvh9ta,
-[class*="_1gdvh9t"] {
+textarea._1gdvh9ta {
   background: transparent !important;
-  background-color: transparent !important;
   color: #FFFFFF !important;
   border: none !important;
   font-family: 'Plus Jakarta Sans', sans-serif !important;
-  font-size: 13px !important; /* Réduit */
-  padding: 8px 12px !important; /* Réduit */
+  font-size: 13px !important;
+  padding: 8px 10px !important;
   caret-color: #FF0066 !important;
-  min-height: 20px !important; /* Hauteur minimale */
-  max-height: 100px !important; /* Hauteur maximale */
+  min-height: 20px !important;
+  max-height: 36px !important;
+  resize: none !important;
 }
 
 .vfrc-chat-input::placeholder,
-textarea.vfrc-chat-input::placeholder,
-textarea._1gdvh9ta::placeholder {
+textarea.vfrc-chat-input::placeholder {
   color: #64748B !important;
   font-size: 13px !important;
 }
 
 .vfrc-chat-input:focus,
-textarea.vfrc-chat-input:focus,
-textarea._1gdvh9ta:focus {
+textarea.vfrc-chat-input:focus {
   outline: none !important;
   color: #FFFFFF !important;
-  background: transparent !important;
 }
 
 /* ==========================================================
-   9. BOUTON ENVOYER - COMPACT
+   10. BOUTON ENVOYER - COMPACT
    ========================================================== */
 .vfrc-chat-input__send,
-#vfrc-send-message,
-[class*="chat-input__send"] {
+#vfrc-send-message {
   background: rgba(100, 100, 120, 0.3) !important;
   border: none !important;
   border-radius: 50% !important;
-  width: 32px !important; /* Réduit */
-  height: 32px !important; /* Réduit */
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  min-height: 28px !important;
   cursor: pointer !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  margin: 4px !important;
+  margin: 2px !important;
 }
 
 .vfrc-chat-input__send:not([disabled]),
 #vfrc-send-message:not([disabled]) {
   background: linear-gradient(135deg, #FF0066, #CC0052) !important;
-  box-shadow: 0 2px 8px rgba(255, 0, 102, 0.4) !important;
+  box-shadow: 0 2px 6px rgba(255, 0, 102, 0.4) !important;
 }
 
 .vfrc-chat-input__send svg,
 #vfrc-send-message svg {
   color: #FFFFFF !important;
-  fill: currentColor !important;
-  width: 16px !important; /* Réduit */
-  height: 16px !important; /* Réduit */
+  width: 14px !important;
+  height: 14px !important;
 }
 
-.vfrc-chat-input__actions,
-[class*="chat-input__actions"] {
+.vfrc-chat-input__actions {
   background: transparent !important;
+  padding: 0 2px !important;
 }
 
 /* ==========================================================
-   10. FIX BANDE NOIRE EN BAS
+   11. FIX SPACERS ET ÉLÉMENTS PARASITES
    ========================================================== */
 .vfrc-chat--bottom-spacer,
 [class*="bottom-spacer"] {
-  background: #0F0F1A !important;
-  background-color: #0F0F1A !important;
   display: none !important;
+  height: 0 !important;
 }
 
 /* ==========================================================
-   11. SCROLLBAR
+   12. SCROLLBAR
    ========================================================== */
 .vfrc-chat--dialog,
 .vfrc-chat-dialog,
@@ -334,7 +368,7 @@ textarea._1gdvh9ta:focus {
 
 .vfrc-chat--dialog::-webkit-scrollbar,
 .vfrc-chat-dialog::-webkit-scrollbar {
-  width: 8px; /* Réduit */
+  width: 8px;
 }
 
 .vfrc-chat--dialog::-webkit-scrollbar-thumb,
@@ -349,7 +383,7 @@ textarea._1gdvh9ta:focus {
 }
 
 /* ==========================================================
-   12. CARDS - COMPACT
+   13. CARDS
    ========================================================== */
 .vfrc-card {
   background: rgba(37, 37, 64, 0.95) !important;
@@ -362,13 +396,14 @@ textarea._1gdvh9ta:focus {
   color: #FFFFFF !important; 
   font-size: 14px !important;
 }
+
 .vfrc-card--description { 
   color: #94A3B8 !important; 
   font-size: 12px !important;
 }
 
 /* ==========================================================
-   13. EXTENSIONS
+   14. EXTENSIONS
    ========================================================== */
 .vfrc-message[class*="extension"] {
   background: transparent !important;
@@ -377,16 +412,17 @@ textarea._1gdvh9ta:focus {
 }
 
 /* ==========================================================
-   14. WATERMARK - MASQUER
+   15. WATERMARK
    ========================================================== */
 .vfrc-footer--watermark,
 .vfrc-watermark,
 [class*="watermark"] {
   display: none !important;
+  height: 0 !important;
 }
 
 /* ==========================================================
-   15. ANIMATIONS
+   16. ANIMATIONS
    ========================================================== */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(10px); }
@@ -398,7 +434,7 @@ textarea._1gdvh9ta:focus {
 }
 
 /* ==========================================================
-   16. RESPONSIVE
+   17. RESPONSIVE
    ========================================================== */
 @media (max-width: 640px) {
   .vfrc-system-response .vfrc-message:not([class*="extension"]),
@@ -408,9 +444,8 @@ textarea._1gdvh9ta:focus {
     padding: 8px 12px !important;
   }
   
-  .vfrc-button:not(.vfrc-header--button) {
+  .vfrc-button:not(.vfrc-header--button):not(#vfrc-start-chat) {
     width: 100% !important;
     margin: 2px 0 !important;
-    padding: 8px 12px !important;
   }
 }
