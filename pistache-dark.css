@@ -1,51 +1,53 @@
 /* ==========================================================
-   🐢 Pistache × Voiceflow — Dark Mode v15.0
+   🐢 Pistache × Voiceflow — Dark Mode v16.0
    
-   ✅ FIX: Scroll automatique vers le bas (structure flex)
-   ✅ Fond noir ultra-profond + dégradé
-   ✅ Logo header centré
+   ✅ FIX: Structure EVO GENESIS pour scroll automatique
+   ✅ FIX: Bouton scroll invisible mais fonctionnel
    ========================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
 /* ==========================================================
-   0. STRUCTURE DU CHAT - FLEX POUR SCROLL AUTO
+   0. STRUCTURE - COPIÉ DE EVO GENESIS (scroll auto)
    ========================================================== */
 #voiceflow-chat-container {
   display: flex !important;
   flex-direction: column !important;
   height: 100% !important;
   min-height: 100% !important;
-  position: relative !important;
+  overflow: visible !important;
 }
 
 .vfrc-widget,
-.vfrc-chat {
+.vfrc-chat,
+.vfrc-chat-dialog,
+.vfrc-chat--dialog {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  flex: 1 !important;
+  overflow: visible !important;
+}
+
+.vfrc-chat-dialog__container {
+  position: static !important;
   display: flex !important;
   flex-direction: column !important;
   height: 100% !important;
   flex: 1 !important;
-  min-height: 0 !important; /* ✅ Important pour flex scroll */
+  overflow: visible !important;
+  inset: auto !important;
 }
 
-.vfrc-chat-dialog,
-.vfrc-chat-dialog__container {
-  display: flex !important;
-  flex-direction: column !important;
-  flex: 1 !important;
-  min-height: 0 !important; /* ✅ Important pour flex scroll */
-  overflow: hidden !important;
-}
-
-/* ✅ Zone de dialogue - SCROLL AUTO */
-.vfrc-chat--dialog {
+.vfrc-chat-body,
+.vfrc-chat-dialog__content {
   display: flex !important;
   flex-direction: column !important;
   flex: 1 !important;
   min-height: 0 !important;
   overflow-y: auto !important;
-  overflow-x: hidden !important;
-  scroll-behavior: smooth !important;
+  padding-bottom: 0 !important;
 }
 
 /* ==========================================================
@@ -60,7 +62,6 @@ div.vfrc-header {
   display: flex !important;
   align-items: center !important;
   gap: 12px !important;
-  flex-shrink: 0 !important; /* ✅ Ne pas rétrécir */
 }
 
 .vfrc-header--container-inner,
@@ -240,14 +241,13 @@ button.vfrc-button:not(.vfrc-header--button):not(#vfrc-start-chat) {
 }
 
 /* ==========================================================
-   7. FOOTER - STRUCTURE FLEX (pas absolute)
+   7. FOOTER - STYLE DARK
    ========================================================== */
 .vfrc-footer,
 div.vfrc-footer {
   background: rgba(12, 12, 20, 0.95) !important;
   border-top: 1px solid rgba(255, 0, 102, 0.25) !important;
   padding: 8px !important;
-  flex-shrink: 0 !important; /* ✅ Ne pas rétrécir */
   backdrop-filter: blur(10px) !important;
 }
 
@@ -257,24 +257,17 @@ div.vfrc-footer__start-button,
 #vfrc-start-chat,
 [class*="start-button"] {
   display: none !important;
-  height: 0 !important;
-  width: 0 !important;
-  padding: 0 !important;
-  margin: 0 !important;
   visibility: hidden !important;
 }
 
-/* ✅ MASQUER: Bouton "Scroll to bottom" */
+/* ✅ INVISIBLE MAIS PRÉSENT: Bouton "Scroll to bottom" (pour que Voiceflow puisse l'utiliser) */
 .vfrc-footer__content-scroll-to-bottom,
-[class*="scroll-to-bottom"],
-.oq48l92,
-.oq48l93 {
-  display: none !important;
-  height: 0 !important;
-  width: 0 !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  visibility: hidden !important;
+[class*="scroll-to-bottom"] {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
 }
 
 /* ✅ MASQUER: Footer links */
