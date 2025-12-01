@@ -1,504 +1,307 @@
 /* ==========================================================
-   🐢 Pistache × Voiceflow — Dark Mode Cosmique v2.0
+   🐢 Pistache × Voiceflow — Dark Mode v3.0 ULTRA-ROBUSTE
    
-   Thème : Rose néon / Noir / Violet cosmique
-   Créé pour : https://corentinhualpa.github.io/pistache/
-   
-   ✨ FEATURES v2 :
-   + Bordures lumineuses néon
-   + Effets glow cosmiques
-   + Typing indicator corrigé
-   + Pas de doublons de bulles
-   + Touches de violet/cyan
-   + Meilleur contraste
+   ⚠️ VERSION BLINDÉE : Sélecteurs agressifs, 100% opaque
    ========================================================== */
 
-/* ==========================================================
-   Import de la police Plus Jakarta Sans
-   ========================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
 /* ==========================================================
-   Variables — Palette Pistache Cosmique
+   🔒 RESET GLOBAL — Forcer fond sombre PARTOUT
    ========================================================== */
-:root {
-  /* 🎨 Rose principal */
-  --pistache-pink: #FF0066;
-  --pistache-pink-light: #FF4D94;
-  --pistache-pink-dark: #CC0052;
-  --pistache-pink-glow: rgba(255, 0, 102, 0.5);
-  
-  /* 🌌 Couleurs cosmiques */
-  --cosmic-purple: #8B5CF6;
-  --cosmic-cyan: #06B6D4;
-  --cosmic-violet: #7C3AED;
-  
-  /* 🌙 Fonds sombres */
-  --dark-bg-deep: #080810;
-  --dark-bg-primary: #0F0F1A;
-  --dark-bg-secondary: #161625;
-  --dark-bg-elevated: #1E1E32;
-  --dark-bg-bubble: #252540;
-  
-  /* 📝 Textes - HAUTE LISIBILITÉ */
-  --text-primary: #FFFFFF;
-  --text-secondary: #E2E8F0;
-  --text-muted: #94A3B8;
-  --text-on-pink: #FFFFFF;
-  
-  /* ✨ Bordures lumineuses */
-  --border-glow-pink: rgba(255, 0, 102, 0.4);
-  --border-glow-purple: rgba(139, 92, 246, 0.3);
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  
-  /* 📐 Typographie */
-  --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-regular: 400;
-  --font-medium: 500;
-  --font-semibold: 600;
-  --font-bold: 700;
-  
-  /* Tailles */
-  --heading-1: 18px;
-  --heading-2: 20px;
-  --heading-3: 15px;
-  --heading-4: 14px;
-  --body-1: 14px;
-  --body-2: 13px;
-  --button: 13px;
-  
-  /* ⏱️ Animations */
-  --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+[class*="vfrc-"],
+[class^="vfrc-"],
+[id*="voiceflow"],
+#voiceflow-chat-container,
+#voiceflow-chat-container * {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
 /* ==========================================================
-   🎯 CONTENEUR PRINCIPAL
+   🎯 WIDGET PRINCIPAL — FOND OPAQUE ABSOLU
    ========================================================== */
+#voiceflow-chat-container,
 .vfrc-widget,
+.vfrc-widget *:not(svg):not(path):not(img):not(button):not(input):not(textarea),
+[class*="vfrc-chat"],
+[class*="vfrc-widget"] {
+  background-color: #0F0F1A !important;
+}
+
+/* Le conteneur racine */
 .vfrc-chat,
 .vfrc-chat__container,
 .vfrc-chat__container-inner,
-div.vfrc-widget,
-div.vfrc-chat {
-  background: var(--dark-bg-deep) !important;
-  background-color: var(--dark-bg-deep) !important;
-  border-radius: 20px !important;
-  border: 1px solid var(--border-glow-pink) !important;
-  box-shadow: 
-    0 0 40px rgba(255, 0, 102, 0.15),
-    0 25px 50px -12px rgba(0, 0, 0, 0.6),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+div.vfrc-chat,
+div[class*="vfrc-chat"] {
+  background: #0F0F1A !important;
+  background-color: #0F0F1A !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
 }
 
 /* ==========================================================
-   🔝 HEADER — Rose néon avec glow intense
+   🔝 HEADER ROSE
    ========================================================== */
 .vfrc-header,
-.vfrc-header--container-inner,
-div.vfrc-header,
-div.vfrc-header--container-inner {
-  background: linear-gradient(135deg, #FF0066 0%, #CC0052 50%, #99003D 100%) !important;
+[class*="vfrc-header"],
+div.vfrc-header {
+  background: linear-gradient(135deg, #FF0066 0%, #CC0052 100%) !important;
   background-color: #FF0066 !important;
+  padding: 16px 20px !important;
   border-bottom: none !important;
-  box-shadow: 
-    0 4px 30px rgba(255, 0, 102, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
-  padding: 18px 24px !important;
-  position: relative !important;
+  box-shadow: 0 4px 20px rgba(255, 0, 102, 0.4) !important;
 }
 
-/* Ligne brillante en haut du header */
-.vfrc-header::before {
-  content: "" !important;
-  position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  height: 1px !important;
-  background: linear-gradient(90deg, 
-    transparent 0%, 
-    rgba(255, 255, 255, 0.6) 50%, 
-    transparent 100%) !important;
-}
-
-/* Titre du header */
-div.vfrc-header--title,
-.vfrc-header--title {
-  font-family: var(--font-family) !important;
-  font-weight: var(--font-bold) !important;
-  font-size: var(--heading-2) !important;
+.vfrc-header--title,
+[class*="header--title"] {
   color: #FFFFFF !important;
-  text-shadow: 0 2px 15px rgba(0, 0, 0, 0.4) !important;
-  letter-spacing: 0.5px !important;
+  font-weight: 700 !important;
+  font-size: 18px !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
 }
 
-/* Masquer le bouton reset */
+/* Cacher bouton reset */
 .vfrc-header--button,
-button.vfrc-header--button,
-.vfrc-header--actions {
+[class*="header--button"] {
   display: none !important;
-  visibility: hidden !important;
 }
 
 /* ==========================================================
-   💬 ZONE DE DIALOGUE
+   💬 ZONE DE DIALOGUE — FOND OPAQUE
    ========================================================== */
 .vfrc-chat--dialog,
 .vfrc-chat-dialog,
 .vfrc-chat-dialog__container,
-div.vfrc-chat--dialog,
-div.vfrc-chat-dialog {
-  background: var(--dark-bg-primary) !important;
-  background-color: var(--dark-bg-primary) !important;
-  padding: 20px !important;
+[class*="chat--dialog"],
+[class*="chat-dialog"],
+div[class*="dialog"] {
+  background: #0F0F1A !important;
+  background-color: #0F0F1A !important;
+  padding: 16px !important;
 }
 
 /* ==========================================================
-   🎭 ZONE AVATAR/INFO ASSISTANT
+   🎭 ZONE ASSISTANT INFO — FOND OPAQUE
    ========================================================== */
 .vfrc-assistant-info,
-.vfrc-assistant-info__container,
-div.vfrc-assistant-info {
-  background: var(--dark-bg-primary) !important;
-  background-color: var(--dark-bg-primary) !important;
-  padding: 20px !important;
+[class*="assistant-info"],
+[class*="assistant"] {
+  background: #0F0F1A !important;
+  background-color: #0F0F1A !important;
 }
 
-.vfrc-assistant-info__name {
-  color: var(--text-muted) !important;
-  font-family: var(--font-family) !important;
-  font-weight: var(--font-semibold) !important;
-  font-size: 16px !important;
+.vfrc-assistant-info__name,
+[class*="assistant-info__name"] {
+  color: #E2E8F0 !important;
+  font-weight: 600 !important;
 }
 
-.vfrc-assistant-info__description {
-  color: var(--text-muted) !important;
-  font-family: var(--font-family) !important;
-  font-size: 13px !important;
-  opacity: 0.7 !important;
+.vfrc-assistant-info__description,
+[class*="assistant-info__description"] {
+  color: #94A3B8 !important;
 }
 
 /* ==========================================================
-   🤖 BULLES SYSTÈME (Bot) — Style cosmique
-   ⚠️ FIX: Sélecteur précis pour éviter les doublons
+   🤖 BULLES SYSTÈME (Bot)
    ========================================================== */
-.vfrc-system-response .vfrc-message {
-  font-family: var(--font-family) !important;
-  font-weight: var(--font-regular) !important;
-  font-size: var(--body-1) !important;
-  line-height: 1.65 !important;
-  
-  background: linear-gradient(135deg, #252540 0%, #1E1E35 100%) !important;
-  background-color: #252540 !important;
-  color: var(--text-primary) !important;
-  
-  /* Bordure lumineuse subtile */
-  border: 1px solid rgba(139, 92, 246, 0.25) !important;
-  border-radius: 18px 18px 18px 6px !important;
-  padding: 16px 20px !important;
-  max-width: 85% !important;
-  
-  /* Glow cosmique subtil */
-  box-shadow: 
-    0 0 20px rgba(139, 92, 246, 0.1),
-    0 8px 25px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
-  
-  white-space: pre-wrap !important;
-  word-break: break-word !important;
-  margin: 8px 0 !important;
+.vfrc-system-response,
+[class*="system-response"] {
+  background: transparent !important;
 }
 
-/* ⚠️ Supprimer les styles sur les conteneurs parents pour éviter doublons */
-.vfrc-system-response > div:not(.vfrc-message) {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  padding: 0 !important;
+.vfrc-system-response .vfrc-message,
+.vfrc-system-response [class*="message"],
+[class*="system-response"] [class*="message"] {
+  background: #252540 !important;
+  background-color: #252540 !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(139, 92, 246, 0.3) !important;
+  border-radius: 16px 16px 16px 4px !important;
+  padding: 14px 18px !important;
+  max-width: 85% !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
 }
 
 /* Texte dans les bulles */
-.vfrc-system-response .vfrc-message p,
-.vfrc-system-response .vfrc-message span,
-.vfrc-system-response .vfrc-message li,
-.vfrc-system-response .vfrc-message div {
-  font-family: var(--font-family) !important;
-  font-size: var(--body-1) !important;
-  color: var(--text-primary) !important;
-  line-height: 1.65 !important;
+.vfrc-system-response .vfrc-message *,
+.vfrc-system-response [class*="message"] * {
+  color: #FFFFFF !important;
   background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
+  font-size: 14px !important;
 }
 
-/* Texte en gras */
+/* Texte en gras = rose */
 .vfrc-system-response .vfrc-message strong,
 .vfrc-system-response .vfrc-message b {
-  color: var(--pistache-pink-light) !important;
-  font-weight: var(--font-semibold) !important;
-}
-
-/* Liens */
-.vfrc-system-response .vfrc-message a {
-  color: var(--cosmic-cyan) !important;
-  text-decoration: none !important;
-  border-bottom: 1px solid transparent !important;
-  transition: var(--transition-smooth) !important;
-}
-
-.vfrc-system-response .vfrc-message a:hover {
-  color: #22D3EE !important;
-  border-bottom-color: var(--cosmic-cyan) !important;
+  color: #FF4D94 !important;
+  font-weight: 600 !important;
 }
 
 /* ==========================================================
-   📝 Hiérarchie typographique
+   👤 BULLES UTILISATEUR
    ========================================================== */
-.vfrc-system-response .vfrc-message h1 {
-  font-weight: var(--font-bold) !important;
-  font-size: var(--heading-1) !important;
-  color: var(--pistache-pink-light) !important;
-  margin: 16px 0 12px 0 !important;
-  padding-bottom: 10px !important;
-  border-bottom: 1px solid var(--border-glow-pink) !important;
-}
-
-.vfrc-system-response .vfrc-message h2 {
-  font-weight: var(--font-semibold) !important;
-  font-size: var(--heading-3) !important;
-  color: var(--text-primary) !important;
-  margin: 14px 0 8px 0 !important;
-}
-
-.vfrc-system-response .vfrc-message h3 {
-  font-weight: var(--font-semibold) !important;
-  font-size: var(--heading-4) !important;
-  color: var(--text-secondary) !important;
-  margin: 12px 0 6px 0 !important;
-}
-
-/* Listes */
-.vfrc-system-response .vfrc-message ul,
-.vfrc-system-response .vfrc-message ol {
-  padding-left: 20px !important;
-  margin: 10px 0 !important;
-}
-
-.vfrc-system-response .vfrc-message li {
-  margin: 6px 0 !important;
-}
-
-/* Code */
-.vfrc-system-response .vfrc-message code {
-  background: rgba(255, 0, 102, 0.15) !important;
-  color: var(--pistache-pink-light) !important;
-  padding: 3px 8px !important;
-  border-radius: 5px !important;
-  font-size: 0.9em !important;
-  border: 1px solid rgba(255, 0, 102, 0.2) !important;
-}
-
-.vfrc-system-response .vfrc-message pre {
-  background: var(--dark-bg-deep) !important;
-  border: 1px solid rgba(139, 92, 246, 0.2) !important;
-  border-radius: 10px !important;
-  padding: 14px !important;
-  overflow-x: auto !important;
-}
-
-/* ==========================================================
-   👤 BULLES UTILISATEUR — Rose brillant
-   ========================================================== */
-.vfrc-user-response .vfrc-message,
-.vfrc-user-response > div {
-  font-family: var(--font-family) !important;
-  font-weight: var(--font-medium) !important;
-  font-size: var(--body-1) !important;
-  line-height: 1.65 !important;
-  
-  background: linear-gradient(135deg, #FF0066 0%, #E6005C 50%, #CC0052 100%) !important;
-  background-color: #FF0066 !important;
-  color: #FFFFFF !important;
-  
-  border: none !important;
-  border-radius: 18px 18px 6px 18px !important;
-  padding: 16px 20px !important;
-  max-width: 85% !important;
-  
-  /* Glow rose intense */
-  box-shadow: 
-    0 0 25px rgba(255, 0, 102, 0.4),
-    0 8px 25px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
-  
-  margin: 8px 0 !important;
-}
-
-.vfrc-user-response .vfrc-message *,
-.vfrc-user-response > div * {
-  color: #FFFFFF !important;
+.vfrc-user-response,
+[class*="user-response"] {
   background: transparent !important;
 }
 
-/* ==========================================================
-   🔘 BOUTONS — Style néon cosmique
-   ========================================================== */
-.vfrc-button:not(.vfrc-header--button),
-button.vfrc-button:not(.vfrc-header--button) {
-  font-family: var(--font-family) !important;
-  font-weight: var(--font-semibold) !important;
-  font-size: var(--button) !important;
-  line-height: 1.4 !important;
-  
-  /* Fond semi-transparent avec bordure rose */
-  background: rgba(255, 0, 102, 0.1) !important;
-  background-color: rgba(255, 0, 102, 0.1) !important;
-  color: var(--pistache-pink-light) !important;
-  
-  border: 2px solid var(--pistache-pink) !important;
-  border-radius: 12px !important;
-  padding: 14px 24px !important;
-  
-  /* Glow subtil */
-  box-shadow: 
-    0 0 15px rgba(255, 0, 102, 0.2),
-    inset 0 0 20px rgba(255, 0, 102, 0.05) !important;
-  
-  transition: var(--transition-smooth) !important;
-  cursor: pointer !important;
-  position: relative !important;
-  overflow: hidden !important;
-  
-  margin: 8px 4px !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 8px !important;
-}
-
-/* Hover — Remplissage rose */
-.vfrc-button:not(.vfrc-header--button):hover {
+.vfrc-user-response .vfrc-message,
+.vfrc-user-response > div,
+.vfrc-user-response [class*="message"],
+[class*="user-response"] [class*="message"] {
   background: linear-gradient(135deg, #FF0066, #CC0052) !important;
   background-color: #FF0066 !important;
   color: #FFFFFF !important;
-  border-color: #FF0066 !important;
-  
-  box-shadow: 
-    0 0 30px rgba(255, 0, 102, 0.5),
-    0 8px 25px rgba(0, 0, 0, 0.3) !important;
-  
-  transform: translateY(-3px) !important;
+  border: none !important;
+  border-radius: 16px 16px 4px 16px !important;
+  padding: 14px 18px !important;
+  max-width: 85% !important;
+  box-shadow: 0 4px 20px rgba(255, 0, 102, 0.4) !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
 }
 
-/* Active */
-.vfrc-button:not(.vfrc-header--button):active {
-  transform: translateY(-1px) !important;
+.vfrc-user-response .vfrc-message *,
+.vfrc-user-response > div *,
+[class*="user-response"] [class*="message"] * {
+  color: #FFFFFF !important;
+  background: transparent !important;
 }
 
-/* Conteneur des boutons - horizontal */
+/* ==========================================================
+   🔘 BOUTONS
+   ========================================================== */
+.vfrc-button:not(.vfrc-header--button),
+button.vfrc-button:not(.vfrc-header--button),
+[class*="vfrc-button"]:not([class*="header"]) {
+  background: #1A1A2E !important;
+  background-color: #1A1A2E !important;
+  color: #FF4D94 !important;
+  border: 2px solid #FF0066 !important;
+  border-radius: 10px !important;
+  padding: 12px 20px !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  margin: 6px 4px !important;
+}
+
+.vfrc-button:not(.vfrc-header--button):hover,
+[class*="vfrc-button"]:not([class*="header"]):hover {
+  background: linear-gradient(135deg, #FF0066, #CC0052) !important;
+  background-color: #FF0066 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 6px 20px rgba(255, 0, 102, 0.5) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Conteneur boutons */
 .vfrc-button-container,
-.vfrc-card--buttons {
+[class*="button-container"] {
+  background: transparent !important;
   display: flex !important;
   flex-wrap: wrap !important;
-  gap: 10px !important;
-  padding: 12px 0 !important;
-  background: transparent !important;
-  justify-content: flex-start !important;
+  gap: 8px !important;
+  padding: 10px 0 !important;
 }
 
 /* ==========================================================
-   ⏳ TYPING INDICATOR — FIX FOND BLANC
+   ⏳ TYPING INDICATOR — PLUS DE FOND BLANC
    ========================================================== */
 .vfrc-typing-indicator,
-div.vfrc-typing-indicator {
-  background: var(--dark-bg-elevated) !important;
-  background-color: var(--dark-bg-elevated) !important;
-  border: 1px solid rgba(139, 92, 246, 0.2) !important;
-  border-radius: 18px 18px 18px 6px !important;
-  padding: 14px 18px !important;
+[class*="typing-indicator"],
+[class*="typing"] {
+  background: #252540 !important;
+  background-color: #252540 !important;
+  border: 1px solid rgba(139, 92, 246, 0.3) !important;
+  border-radius: 16px 16px 16px 4px !important;
+  padding: 12px 16px !important;
   display: inline-flex !important;
-  align-items: center !important;
-  gap: 5px !important;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+  gap: 6px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
 }
 
-/* Les 3 points animés */
 .vfrc-typing-indicator span,
-.vfrc-typing-indicator div {
+.vfrc-typing-indicator div,
+[class*="typing-indicator"] span,
+[class*="typing-indicator"] div,
+[class*="typing"] span {
   width: 8px !important;
   height: 8px !important;
-  background: var(--pistache-pink) !important;
-  background-color: var(--pistache-pink) !important;
+  background: #FF0066 !important;
+  background-color: #FF0066 !important;
   border-radius: 50% !important;
-  animation: cosmicPulse 1.4s infinite ease-in-out !important;
+  animation: pulse 1.4s infinite ease-in-out !important;
 }
 
-.vfrc-typing-indicator span:nth-child(1) { animation-delay: 0s !important; }
-.vfrc-typing-indicator span:nth-child(2) { animation-delay: 0.2s !important; }
-.vfrc-typing-indicator span:nth-child(3) { animation-delay: 0.4s !important; }
+.vfrc-typing-indicator span:nth-child(2),
+[class*="typing"] span:nth-child(2) { animation-delay: 0.2s !important; }
+.vfrc-typing-indicator span:nth-child(3),
+[class*="typing"] span:nth-child(3) { animation-delay: 0.4s !important; }
 
-@keyframes cosmicPulse {
-  0%, 80%, 100% { 
-    transform: scale(0.6);
-    opacity: 0.4;
-    background-color: var(--pistache-pink);
-  }
-  40% { 
-    transform: scale(1.1);
-    opacity: 1;
-    background-color: var(--cosmic-purple);
-  }
+@keyframes pulse {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+  40% { transform: scale(1.1); opacity: 1; }
 }
 
 /* ==========================================================
-   ⌨️ ZONE DE SAISIE — Style élégant
+   ⌨️ FOOTER / INPUT — FOND OPAQUE
    ========================================================== */
 .vfrc-footer,
 .vfrc-chat-input,
-div.vfrc-footer,
-div.vfrc-chat-input {
-  background: var(--dark-bg-secondary) !important;
-  background-color: var(--dark-bg-secondary) !important;
+[class*="vfrc-footer"],
+[class*="chat-input"],
+[class*="footer"] {
+  background: #161625 !important;
+  background-color: #161625 !important;
   border-top: 1px solid rgba(255, 0, 102, 0.2) !important;
-  padding: 16px 20px !important;
+  padding: 14px 18px !important;
 }
 
 .vfrc-chat-input textarea,
-.vfrc-chat-input input {
-  font-family: var(--font-family) !important;
-  font-weight: var(--font-regular) !important;
-  font-size: var(--body-1) !important;
-  
-  background: var(--dark-bg-elevated) !important;
-  background-color: var(--dark-bg-elevated) !important;
-  color: var(--text-primary) !important;
-  
+.vfrc-chat-input input,
+[class*="chat-input"] textarea,
+[class*="chat-input"] input {
+  background: #1E1E32 !important;
+  background-color: #1E1E32 !important;
+  color: #FFFFFF !important;
   border: 1px solid rgba(255, 0, 102, 0.3) !important;
-  border-radius: 14px !important;
-  padding: 14px 18px !important;
-  
-  transition: var(--transition-smooth) !important;
+  border-radius: 12px !important;
+  padding: 12px 16px !important;
+  font-size: 14px !important;
 }
 
 .vfrc-chat-input textarea:focus,
-.vfrc-chat-input input:focus {
+.vfrc-chat-input input:focus,
+[class*="chat-input"] textarea:focus,
+[class*="chat-input"] input:focus {
   outline: none !important;
-  border-color: var(--pistache-pink) !important;
-  box-shadow: 
-    0 0 0 3px rgba(255, 0, 102, 0.15),
-    0 0 20px rgba(255, 0, 102, 0.1) !important;
+  border-color: #FF0066 !important;
+  box-shadow: 0 0 0 3px rgba(255, 0, 102, 0.2) !important;
 }
 
 .vfrc-chat-input textarea::placeholder,
 .vfrc-chat-input input::placeholder {
-  color: var(--text-muted) !important;
+  color: #64748B !important;
 }
 
-/* ==========================================================
-   📤 Bouton Envoyer
-   ========================================================== */
+/* Bouton envoyer */
+#vfrc-send-message,
+.vfrc-chat-input__send,
+[class*="send-message"],
+[class*="chat-input__send"] {
+  background: transparent !important;
+  border: none !important;
+  color: #64748B !important;
+  padding: 10px 14px !important;
+  cursor: pointer !important;
+}
+
 #vfrc-send-message svg,
 .vfrc-chat-input__send svg {
   display: none !important;
@@ -506,103 +309,76 @@ div.vfrc-chat-input {
 
 #vfrc-send-message::after,
 .vfrc-chat-input__send::after {
-  content: "→";
-  font-size: 22px;
-  font-weight: var(--font-bold);
-}
-
-#vfrc-send-message,
-.vfrc-chat-input__send {
-  background: transparent !important;
-  border: none !important;
-  border-radius: 12px !important;
-  padding: 12px 18px !important;
-  color: var(--text-muted) !important;
-  transition: var(--transition-smooth) !important;
-  cursor: not-allowed !important;
-  min-width: 55px !important;
+  content: "→" !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
 }
 
 #vfrc-send-message:not([disabled]),
 .vfrc-chat-input__send:not([disabled]) {
-  color: var(--pistache-pink) !important;
-  cursor: pointer !important;
-  text-shadow: 0 0 15px rgba(255, 0, 102, 0.5) !important;
+  color: #FF0066 !important;
 }
 
 #vfrc-send-message:not([disabled]):hover,
 .vfrc-chat-input__send:not([disabled]):hover {
-  background: rgba(255, 0, 102, 0.15) !important;
-  transform: scale(1.15) translateX(2px) !important;
+  color: #FF4D94 !important;
+  transform: scale(1.1) !important;
 }
 
 /* ==========================================================
-   📜 SCROLLBAR — Rose cosmique
+   📜 SCROLLBAR
    ========================================================== */
-.vfrc-chat--dialog,
-.vfrc-chat-dialog,
-.vfrc-chat-dialog__container {
-  scrollbar-width: thin !important;
-  scrollbar-color: var(--pistache-pink) var(--dark-bg-secondary) !important;
-}
-
-.vfrc-chat--dialog::-webkit-scrollbar,
-.vfrc-chat-dialog::-webkit-scrollbar,
-.vfrc-chat-dialog__container::-webkit-scrollbar {
+[class*="vfrc-"]::-webkit-scrollbar {
   width: 8px !important;
 }
 
-.vfrc-chat--dialog::-webkit-scrollbar-thumb,
-.vfrc-chat-dialog::-webkit-scrollbar-thumb,
-.vfrc-chat-dialog__container::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--pistache-pink), var(--cosmic-purple)) !important;
-  border-radius: 999px !important;
+[class*="vfrc-"]::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #FF0066, #8B5CF6) !important;
+  border-radius: 10px !important;
 }
 
-.vfrc-chat--dialog::-webkit-scrollbar-track,
-.vfrc-chat-dialog::-webkit-scrollbar-track,
-.vfrc-chat-dialog__container::-webkit-scrollbar-track {
-  background: var(--dark-bg-secondary) !important;
-  border-radius: 999px !important;
+[class*="vfrc-"]::-webkit-scrollbar-track {
+  background: #161625 !important;
+}
+
+/* ==========================================================
+   🛡️ OVERRIDE CLASSES DYNAMIQUES
+   ========================================================== */
+/* Voiceflow génère des classes comme _abc123, on les force */
+[class^="_"],
+[class*=" _"] {
+  background-color: inherit !important;
+}
+
+/* S'assurer que les overlays sont opaques */
+.vfrc-chat--overlay,
+[class*="overlay"] {
+  background: #0F0F1A !important;
+  background-color: #0F0F1A !important;
 }
 
 /* ==========================================================
    🖼️ Cards
    ========================================================== */
-.vfrc-card {
-  background: var(--dark-bg-elevated) !important;
+.vfrc-card,
+[class*="vfrc-card"] {
+  background: #1E1E32 !important;
+  background-color: #1E1E32 !important;
   border: 1px solid rgba(139, 92, 246, 0.2) !important;
-  border-radius: 14px !important;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
+  border-radius: 12px !important;
 }
 
-.vfrc-card--title {
-  color: var(--text-primary) !important;
-  font-weight: var(--font-semibold) !important;
-}
-
-.vfrc-card--description {
-  color: var(--text-secondary) !important;
-}
+.vfrc-card--title { color: #FFFFFF !important; }
+.vfrc-card--description { color: #CBD5E1 !important; }
 
 /* ==========================================================
-   🛡️ Protection des extensions
+   🛡️ Extensions — ne pas toucher
    ========================================================== */
-.vfrc-message[class*="extension"] {
+[class*="extension"] {
   background: transparent !important;
-  padding: 0 !important;
   border: none !important;
   box-shadow: none !important;
-}
-
-/* ==========================================================
-   🧹 Nettoyage global
-   ========================================================== */
-.vfrc-chat--overlay,
-.vfrc-footer__content,
-.vfrc-input-container {
-  background: var(--dark-bg-secondary) !important;
-  box-shadow: none !important;
+  padding: 0 !important;
 }
 
 /* ==========================================================
@@ -613,56 +389,11 @@ div.vfrc-chat-input {
   .vfrc-user-response .vfrc-message,
   .vfrc-user-response > div {
     max-width: 92% !important;
-    padding: 14px 16px !important;
+    padding: 12px 14px !important;
   }
   
   .vfrc-button:not(.vfrc-header--button) {
-    padding: 12px 18px !important;
-    font-size: 12px !important;
-  }
-  
-  .vfrc-button-container {
-    flex-direction: column !important;
-  }
-  
-  .vfrc-button-container .vfrc-button {
     width: 100% !important;
+    margin: 4px 0 !important;
   }
-}
-
-/* ==========================================================
-   ✨ Animation d'entrée des messages
-   ========================================================== */
-@keyframes slideInGlow {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.vfrc-message {
-  animation: slideInGlow 0.35s ease-out !important;
-}
-
-/* ==========================================================
-   🌟 Effet de brillance subtil sur hover des bulles
-   ========================================================== */
-.vfrc-system-response .vfrc-message:hover {
-  border-color: rgba(139, 92, 246, 0.4) !important;
-  box-shadow: 
-    0 0 25px rgba(139, 92, 246, 0.15),
-    0 8px 25px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
-}
-
-.vfrc-user-response .vfrc-message:hover,
-.vfrc-user-response > div:hover {
-  box-shadow: 
-    0 0 35px rgba(255, 0, 102, 0.5),
-    0 8px 25px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
 }
